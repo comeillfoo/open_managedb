@@ -1,4 +1,4 @@
-package instructions;
+package interaction.instructions;
 
 public class RemoveKey implements Command {
   @Override public void Execute() {}

@@ -1,4 +1,4 @@
-package plants;
+package interaction.plants;
 
 import entity.Address;
 
