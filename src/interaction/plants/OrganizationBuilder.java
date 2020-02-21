@@ -4,7 +4,7 @@ import entity.Organization;
 
 public class OrganizationBuilder implements Factory<Organization> {
   @Override
-  public <Organization> Organization make() {
+  public Organization make() {
     return null;
   }
 }

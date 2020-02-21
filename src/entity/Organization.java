@@ -10,25 +10,26 @@ import java.time.ZonedDateTime;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Mappable<Integer> {
   private static int count = 0;
-  @XmlAttribute(name = "id")
   private final int id; // generates automatically
   @XmlAttribute(name = "name")
   @NotNull
   private final String name;
-  @XmlElement
+  @XmlElement(name = "coordinates")
   @NotNull
   private final Coordinates coordinates;
-  @XmlElement
   @NotNull
   private final ZonedDateTime creationDate = ZonedDateTime.now();
+  @XmlAttribute(name = "turnover")
   private final float annualTurnover;
+  @XmlElement(name = "fullname")
   @NotNull
   private final String fullname;
+  @XmlAttribute(name = "employees")
   private final int employeesCount;
-  @XmlElement
+  @XmlElement(name = "type")
   @Nullable
   private final OrganizationType type;
-  @XmlElement
+  @XmlElement(name = "officialaddress")
   @Nullable
   private final Address officialAddress;
 

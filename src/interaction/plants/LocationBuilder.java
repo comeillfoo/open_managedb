@@ -3,9 +3,8 @@ package interaction.plants;
 import entity.Location;
 
 class LocationBuilder implements Factory<Location> {
-
   @Override
-  public <Location> Location make() {
+  public Location make() {
     return null;
   }
 }
