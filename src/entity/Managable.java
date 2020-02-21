@@ -1,5 +1,0 @@
-package entity;
-
-interface Managable {
-
-}

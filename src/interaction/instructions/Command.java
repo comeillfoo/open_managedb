@@ -1,5 +1,6 @@
 package interaction.instructions;
 
-interface Command {
+@FunctionalInterface
+public interface Command {
   void Execute();
 }

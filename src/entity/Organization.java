@@ -1,10 +1,15 @@
 package entity;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
+import javax.xml.bind.annotation.*;
 import java.time.ZonedDateTime;
-import java.
 
 @XmlRootElement(name="organization")
-public class Organization {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Organization implements Mappable {
+  private static int count = 0;
   @XmlAttribute(name = "id")
   private final int id; // generates automatically
   @XmlAttribute(name = "name")
@@ -29,9 +34,10 @@ public class Organization {
 
   public Organization(String name, Coordinates coordinates,
                       float annualTurnover, String fullname,
-                      int employeesCount, OrganisationType type, Address officialAddress) {
+                      int employeesCount, OrganizationType type, Address officialAddress) {
+    id = count++;
     this.name = name;
-    this.creationDate = ZonedDateTime.;
+    this.coordinates = coordinates;
     this.annualTurnover = annualTurnover;
     this.fullname = fullname;
     this.employeesCount = employeesCount;
@@ -40,7 +46,7 @@ public class Organization {
 
   }
   @Override
-  public String ToString() {
+  public String toString() {
     return "Organization[id: " + id + "; name: " + name + "; coordinates: " + coordinates
         + "; creationDate: " + creationDate + "; annualTurnover: " + annualTurnover
         + "; fullname: " + fullname + "; employeesCount: " + employeesCount
@@ -48,11 +54,16 @@ public class Organization {
   }
   @Override
   public boolean equals(Object other) {
-
+    return true;
   }
   @Override
   public int hashCode() {
-    return 0;
+    return 0xdead;
+  }
+
+  @Override
+  public int getKey() {
+    return id;
   }
 }
 

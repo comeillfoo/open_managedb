@@ -1,10 +1,13 @@
 package interaction.customer;
 
-interface Reciever {
-  void add(Managable element);
-  void clear();
-  void exit();
-  void filterContains();
-  void help();
-  void write();
+import entity.Mappable;
+
+import java.io.PrintStream;
+import java.util.List;
+
+public interface Reciever {
+  void add(Mappable element);
+  List<? extends Mappable> load();
+  void unload();
+  void man(String[] pages, PrintStream printer);
 }
