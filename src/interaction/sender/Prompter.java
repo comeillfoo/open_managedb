@@ -2,15 +2,21 @@ package interaction.sender;
 
 import interaction.instructions.Command;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public abstract class Prompter implements Invoker {
-  private final Map<String, Command> dictionary;
-  public Prompter() {
+  protected final PrintStream pipe;
+  protected final Scanner interrogater;
+  protected final Map<String, Command> dictionary;
+  public Prompter(PrintStream pipeout, InputStream pipein) {
     dictionary = new HashMap<>();
+    pipe = pipeout;
+    interrogater = new Scanner(pipein);
   }
-
   public void signup(String command_name, Command instruct) {
     dictionary.put(command_name, instruct);
   }
