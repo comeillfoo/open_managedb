@@ -15,11 +15,11 @@ public class Add implements Command {
     this.element = element;
   }
   @Override public String toString() {
-    return "add";
+    return NAME + " : " + SYNTAX;
   }
-  public static final String NAME = toString();
+  public static final String NAME = "add";
   public static final String BRIEF = "добавляет новый элемент в коллекцию";
-  public static final String SYNTAX = toString() + " {element}";
+  public static final String SYNTAX = NAME + " {element}";
   public static final String DESCRIPTION = "Аргумент в фигурных скобках указывается после\n\t" +
       "ввода команды отдельно по приглашении ко вводу\n\t" +
       "всех требуемых полей.";

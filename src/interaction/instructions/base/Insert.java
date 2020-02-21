@@ -4,9 +4,9 @@ import interaction.instructions.Command;
 
 public class Insert implements Command {
   @Override public void Execute() {}
-  @Override public String toString() {return "insert";}
-  public static final NAME = toString();
-  public static final BRIEF = "";
-  public static final SYNTAX = toString() + " [key] {element}";
-  public static final DESCRIPTION = "";
+  @Override public String toString() {return NAME + " : " + SYNTAX;}
+  public static final String NAME = "insert";
+  public static final String BRIEF = "";
+  public static final String SYNTAX = NAME + " [key] {element}";
+  public static final String DESCRIPTION = "";
 }

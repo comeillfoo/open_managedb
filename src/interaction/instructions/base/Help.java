@@ -10,9 +10,9 @@ public class Help implements Command {
   private final Reciever sieve;
   private final PrintStream printer;
   private final String[] pages = new String[16];
-  public Help(Reciever reciever, PrintStream printer) {this.sieve = reciever; this.printer = printer;}
+  public Help(Reciever reciever, PrintStream printer) {sieve = reciever; this.printer = printer;}
 
-  @Override public void Execute() {sieve.man(pages);}
+  @Override public void Execute() {sieve.man(pages, printer);}
 
   private String makepage(String command_name, String brief, String syntax, String description) {
     StringBuilder built = new StringBuilder(">" + command_name.toUpperCase());
@@ -43,9 +43,9 @@ public class Help implements Command {
     pages[14] = makepage(SumOfAnnual.NAME, SumOfAnnual.BRIEF, SumOfAnnual.SYNTAX, SumOfAnnual.DESCRIPTION);
     pages[15] = makepage(ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX, ExecuteScript.DESCRIPTION);
   }
-  @Override public String toString() {return "help";}
-  public final static String NAME = toString();
-  public final static String BRIEF = "выводит справку по доступным командам";
-  public final static String SYNTAX = toString();
-  public final static String DESCRIPTION = "Выводит справку по доступным командам.";
+  @Override public String toString() {return NAME + " : " + SYNTAX;}
+  public static final String NAME = "help";
+  public static final String BRIEF = "выводит справку по доступным командам";
+  public static final String SYNTAX = NAME;
+  public static final String DESCRIPTION = "Выводит справку по доступным командам.";
 }
