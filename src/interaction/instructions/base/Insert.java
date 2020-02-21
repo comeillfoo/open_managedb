@@ -1,9 +1,19 @@
 package interaction.instructions.base;
 
-import interaction.instructions.Command;
+import entity.Mappable;
+import interaction.customer.Reciever;
 
-public class Insert implements Command {
-  @Override public void Execute() {}
+public class Insert<K> extends Committer {
+  private K key;
+  public Insert(Reciever reciever) {
+    super(reciever);
+  }
+  public boolean commit(K key, Mappable element) {
+    this.key = key;
+    committed = element;
+    return true;
+  }
+  @Override public void Execute() { sieve.add(key, committed); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "insert";
   public static final String BRIEF = "";

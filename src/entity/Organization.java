@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 
 @XmlRootElement(name="organization")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Organization implements Mappable {
+public class Organization implements Mappable<Integer> {
   private static int count = 0;
   @XmlAttribute(name = "id")
   private final int id; // generates automatically
@@ -62,7 +62,7 @@ public class Organization implements Mappable {
   }
 
   @Override
-  public int getKey() {
+  public Integer getKey() {
     return id;
   }
 }

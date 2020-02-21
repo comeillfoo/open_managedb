@@ -1,31 +1,34 @@
 package interaction.customer;
 
 // user-packages
-
-import entity.Mappable;
 import entity.Organization;
 import entity.Organizations;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
 import java.util.List;
 
-// xml-packages
-// io-packages
+// io package
+import java.io.IOException;
+import java.io.PrintStream;
 // input:
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 // output:
-// other packages
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
 
-public class TotalCommander<K, V extends Mappable> extends Commander {
+public class TotalCommander extends Commander<Integer, Organization> {
   public TotalCommander(String envVar) {super(envVar);}
-  @Override public void add(Mappable element) {
-    elements.put(element.getKey(), element);
-  }
+  // base methods
+  @Override public void add(Organization element) { elements.put(element.getKey(), element);}
+  @Override public void add(Integer key, Organization element) {elements.put(key, element);}
+
   @Override public List<Organization> load() {
-    Organizations companies = null; // TODO: eliminate maybe null remaining
+    Organizations companies = null; // TODO: eliminate "maybe null" remaining
     try(InputStream streamin = new FileInputStream(System.getenv(envVar));
         InputStreamReader reader = new InputStreamReader(streamin);
     ) {
@@ -34,7 +37,7 @@ public class TotalCommander<K, V extends Mappable> extends Commander {
         JAXBContext.newInstance(Organizations.class);
         Unmarshaller subloader;
         subloader = loader.createUnmarshaller();
-        companies = (Organizations) subloader.unmarshal(reader); // TODO: maybe null
+        companies = (Organizations) subloader.unmarshal(reader); // TODO: "maybe null"
       } catch (JAXBException e) {
         System.err.println(e.getErrorCode() + ": " + e.getMessage());
         System.err.println(e.getStackTrace());
@@ -65,6 +68,7 @@ public class TotalCommander<K, V extends Mappable> extends Commander {
     }
   }
 
+  @Override public void clear() {elements.clear();}
   @Override
   public void man(String[] pages, PrintStream writer) {
     for (String p : pages)

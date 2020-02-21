@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public abstract class Prompter implements Invoker {
+abstract class Prompter implements Invoker {
   protected final PrintStream pipe;
   protected final Scanner interrogater;
   protected final Map<String, Command> dictionary;
@@ -17,8 +17,9 @@ public abstract class Prompter implements Invoker {
     pipe = pipeout;
     interrogater = new Scanner(pipein);
   }
-  public void signup(String command_name, Command instruct) {
+  @Override public void signup(String command_name, Command instruct) {
     dictionary.put(command_name, instruct);
   }
-  public void invoke(String command_name) {dictionary.getOrDefault(command_name, () -> System.err.println("404")).Execute();}
+  @Override public void invoke(String command_name) {dictionary.getOrDefault(command_name, () -> System.err.println("404")).Execute();}
+  @Override public PrintStream getMainStream() {return pipe;}
 }

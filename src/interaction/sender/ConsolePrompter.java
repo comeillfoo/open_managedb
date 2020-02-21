@@ -1,15 +1,13 @@
 package interaction.sender;
 
 import exceptions.InvalidClassNameException;
+import interaction.instructions.base.Add;
+import interaction.instructions.base.Clear;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 
 public final class ConsolePrompter extends Prompter {
-  // initialize block
-  {
-    
-  }
   public ConsolePrompter(PrintStream pipeout, InputStream pipein) {
     super(pipeout, pipein);
   }

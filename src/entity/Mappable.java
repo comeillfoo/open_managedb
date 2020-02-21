@@ -1,5 +1,5 @@
 package entity;
 
-public interface Mappable {
-  int getKey();
+public interface Mappable<K> {
+   <K> K getKey();
 }

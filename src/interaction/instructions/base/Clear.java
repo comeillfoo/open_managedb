@@ -1,9 +1,11 @@
 package interaction.instructions.base;
 
-import interaction.instructions.Command;
+import interaction.customer.Reciever;
+import interaction.instructions.Decree;
 
-public class Clear implements Command {
-  @Override public void Execute() {}
+public class Clear extends Decree {
+  public Clear(Reciever reciever) {super(reciever);}
+  @Override public void Execute() {sieve.clear();}
   @Override public String toString() {
     return NAME + " : " + SYNTAX;
   }

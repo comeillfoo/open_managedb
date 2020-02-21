@@ -1,19 +1,15 @@
 package interaction.instructions.base;
 
 import interaction.customer.Reciever;
-import interaction.instructions.Command;
 import interaction.instructions.extended.*;
-
 import java.io.PrintStream;
 
-public class Help implements Command {
-  private final Reciever sieve;
-  private final PrintStream printer;
+public class Help extends Recorder {
   private final String[] pages = new String[16];
-  public Help(Reciever reciever, PrintStream printer) {sieve = reciever; this.printer = printer;}
+
+  public Help(Reciever reciever, PrintStream printer) {super(reciever, printer);}
 
   @Override public void Execute() {sieve.man(pages, printer);}
-
   private String makepage(String command_name, String brief, String syntax, String description) {
     StringBuilder built = new StringBuilder(">" + command_name.toUpperCase());
     built.append("name:\n");
