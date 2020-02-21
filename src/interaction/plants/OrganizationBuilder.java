@@ -1,13 +1,10 @@
 package interaction.plants;
 
-import entity.Organisation;
+import entity.Organization;
 
 public class OrganizationBuilder implements Factory<Organization> {
   @Override
-  public <Organization> Organization create() {
-  }
-  @Override
-  public <Organization> List<Organization> createFromFile(String pathname) {
-
+  public <Organization> Organization make() {
+    return null;
   }
 }
