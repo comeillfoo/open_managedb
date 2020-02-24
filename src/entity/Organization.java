@@ -46,6 +46,19 @@ public class Organization implements Mappable<Integer> {
     this.officialAddress = officialAddress;
 
   }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public float getAnnualTurnover() {
+    return this.annualTurnover;
+  }
+
+  public ZonedDateTime getCreationDate() {
+    return this.creationDate;
+  }
+
   @Override
   public String toString() {
     return "Organization[id: " + id + "; name: " + name + "; coordinates: " + coordinates

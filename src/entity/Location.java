@@ -13,14 +13,17 @@ public class Location {
   @XmlAttribute(name = "x")
   private final long x;
   @XmlAttribute(name = "y")
-  @NotNull private final Long y;
+  @NotNull
+  private final Long y;
   @XmlAttribute(name = "z")
   private final double z;
+
   public Location(long x, Long y, double z) {
     this.x = x;
     this.y = y;
     this.z = z;
   }
+
   @Override
   public String toString() {
     return "Location: [x: " + x + "; y: " + y + "; z: " + z + "]";

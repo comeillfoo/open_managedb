@@ -1,8 +1,6 @@
 package interaction.sender;
 
 import exceptions.InvalidClassNameException;
-import interaction.instructions.base.Add;
-import interaction.instructions.base.Clear;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -11,27 +9,58 @@ public final class ConsolePrompter extends Prompter {
   public ConsolePrompter(PrintStream pipeout, InputStream pipein) {
     super(pipeout, pipein);
   }
-  private class ParamsCollector {
+
+  public class ParamsCollector {
+
     private final ParamsCollector[] internals;
     private final long[] integers;
     private final double[] fractions;
     private final String[] lines;
+
     private ParamsCollector(ParamsCollector[] internals, long[] integers, double[] fractions, String[] lines) {
       this.internals = internals;
       this.integers = integers;
       this.fractions = fractions;
       this.lines = lines;
     }
+
+    public ParamsCollector[] getInternals() {
+      return this.internals;
+    }
+
+    public long[] getIntegers() {
+      return this.integers;
+    }
+
+    public double[] getFractions() {
+      return this.fractions;
+    }
+
+    public String[] getLines() {
+      return this.lines;
+    }
+
   }
+
   private ParamsCollector getParams(String className) throws InvalidClassNameException {
     switch (className) {
-      case "Organization": return getOrganization();
-      case "Coordinates": return getCoordinates();
-      case "Address": return getAddress();
-      case "Location": return getLocation();
-      default: throw new InvalidClassNameException();
+      case "Organization":
+        return getOrganization();
+      case "Coordinates":
+        return getCoordinates();
+      case "Address":
+        return getAddress();
+      case "Location":
+        return getLocation();
+      default:
+        throw new InvalidClassNameException(className);
     }
   }
+
+  /*private ParamsCollector getKey(){
+    System.out.println("Enter a key:");
+    return new ParamsCollector(null,null,null,null,interrogater.nextInt());
+  }*/
   private ParamsCollector getOrganization() {
     pipe.print("Enter string Organization.name: ");
     String name = interrogater.nextLine();

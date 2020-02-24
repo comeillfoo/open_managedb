@@ -12,4 +12,11 @@ public interface Reciever<K, V extends Mappable<K>> {
   void clear();
   void man(String[] pages, PrintStream printer);
   String review();
+  void removeKey();
+  void save();
+  void show();
+  void update(V element);
+  void maxByCreationDate();
+  void filterContaines();
+  void sumOfAnnual();
 }

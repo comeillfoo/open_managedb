@@ -13,11 +13,14 @@ public class Coordinates {
   @XmlAttribute(name = "x")
   private final int x;
   @XmlAttribute(name = "y")
-  @NotNull private final Float y;
+  @NotNull
+  private final Float y;
+
   public Coordinates(int x, Float y) {
     this.x = x;
     this.y = y;
   }
+
   @Override
   public String toString() {
     return "Coordinates: [x: " + x + "; y: " + y + "]";

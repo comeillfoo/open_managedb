@@ -7,7 +7,7 @@ public abstract class Decree implements Command {
   @Override public String toString() {
     return NAME + " : " + SYNTAX;
   }
-  protected Decree(Reciever reciever) {sieve = reciever;}
+  protected Decree(Reciever reciever) { sieve = reciever;}
   protected static final String NAME = null;
   protected static final String BRIEF = null;
   protected static final String SYNTAX = null;

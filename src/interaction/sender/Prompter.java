@@ -17,9 +17,21 @@ abstract class Prompter implements Invoker {
     pipe = pipeout;
     interrogater = new Scanner(pipein);
   }
-  @Override public void signup(String command_name, Command instruct) {
+
+  public Scanner getInterrogater() {
+    return this.interrogater;
+  }
+
+  @Override
+  public void signup(String command_name, Command instruct) {
+
     dictionary.put(command_name, instruct);
   }
-  @Override public void invoke(String command_name) {dictionary.getOrDefault(command_name, () -> System.err.println("404")).Execute();}
+  @Override
+  public void invoke(String command_name) {
+
+    dictionary.getOrDefault(command_name, () -> System.err.println("404")).Execute();
+
+  }
   @Override public PrintStream getMainStream() {return pipe;}
 }
