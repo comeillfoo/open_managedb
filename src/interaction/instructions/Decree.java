@@ -1,5 +1,6 @@
 package interaction.instructions;
 
+import entity.Organization;
 import interaction.customer.Reciever;
 
 public abstract class Decree implements Command {

@@ -1,14 +1,14 @@
 package interaction.instructions.base;
 
-import entity.Mappable;
 import interaction.customer.Reciever;
+import interaction.sender.Prompter;
 
 public class Add extends Committer {
   @Override public void Execute() {
-    sieve.add(committed);
+    sieve.add(sieve.cook(committed));
   }
   public Add(Reciever reciever) {super(reciever);}
-  public boolean commit(Mappable element) {
+  @Override public boolean commit(Prompter.ParamsCollector element) {
     committed = element;
     return true;
   }

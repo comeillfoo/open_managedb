@@ -1,12 +1,13 @@
 package interaction.instructions.base;
 
-import entity.Mappable;
 import interaction.customer.Reciever;
 import interaction.instructions.Decree;
+import interaction.sender.Prompter;
 
-abstract class Committer extends Decree {
-  protected Mappable committed;
+public abstract class Committer extends Decree {
+  protected Prompter.ParamsCollector committed;
   protected Committer(Reciever reciever) {
     super(reciever);
   }
+  protected abstract boolean commit(Prompter.ParamsCollector element);
 }

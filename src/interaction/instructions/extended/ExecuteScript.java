@@ -1,9 +1,15 @@
 package interaction.instructions.extended;
 
-import interaction.instructions.Command;
+import interaction.customer.Reciever;
+import interaction.instructions.Decree;
 
-public class ExecuteScript implements Command {
-  @Override public void Execute() {}
+public class ExecuteScript extends Decree {
+  protected ExecuteScript(Reciever reciever) {
+    super(reciever);
+  }
+  @Override public void Execute() {
+
+  }
   @Override public String toString() {
     return NAME + " : " + SYNTAX;
   }

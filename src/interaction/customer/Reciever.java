@@ -1,6 +1,8 @@
 package interaction.customer;
 
 import entity.Mappable;
+import interaction.sender.Prompter;
+
 import java.io.PrintStream;
 import java.util.List;
 
@@ -12,4 +14,8 @@ public interface Reciever<K, V extends Mappable<K>> {
   void clear();
   void man(String[] pages, PrintStream printer);
   String review();
+  Mappable<K> cook(Prompter.ParamsCollector committed);
+  K search(Integer id);
+  void remove(K key);
+  String survey();
 }

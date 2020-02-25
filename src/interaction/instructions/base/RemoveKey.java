@@ -1,9 +1,20 @@
 package interaction.instructions.base;
 
-import interaction.instructions.Command;
+import entity.Organization;
+import interaction.customer.Reciever;
+import interaction.instructions.Decree;
 
-public class RemoveKey implements Command {
-  @Override public void Execute() {}
+public class RemoveKey extends Decree {
+  private Integer key;
+  public RemoveKey(Reciever<Integer, Organization> reciever) {
+    super(reciever);
+  }
+  public void openKey(Integer key) {
+    this.key = key;
+  }
+  @Override public void Execute() {
+    sieve.remove(key);
+  }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "remove_key";
   public static final String BRIEF = "";

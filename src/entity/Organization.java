@@ -46,6 +46,7 @@ public class Organization implements Mappable<Integer> {
     this.officialAddress = officialAddress;
 
   }
+  public int getID() {return id;}
   @Override
   public String toString() {
     return "Organization[id: " + id + "; name: " + name + "; coordinates: " + coordinates
@@ -66,9 +67,4 @@ public class Organization implements Mappable<Integer> {
   public Integer getKey() {
     return id;
   }
-}
-
-enum OrganizationType {
-  PUBLIC, TRUST, PRIVATE_LIMITED_COMPANY, OPEN_JOINT_STOCK_COMPANY;
-
 }

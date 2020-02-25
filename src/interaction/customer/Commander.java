@@ -21,7 +21,7 @@ abstract class Commander<K, V extends Mappable<K>> implements Reciever<K, V> {
     info.append("\t > Collection just name: " + studyee.getName() + ";\n");
     info.append("\t > Collection in generic view: " + studyee.toGenericString() + ";\n");
     info.append("\n\t > As string:\n\t" + studyee + "\n\n");
-    studyee = null;
+    studyee = null; // TODO: is it possible memory performance?
     info.append("\t > Is collection empty?: " + elements.isEmpty() + ";\n");
     info.append("\t > Collection size: " + elements.size() + ";\n");
     info.append("\n\t > As string:\n\t" + elements + "\n\n");

@@ -1,8 +1,12 @@
 package interaction.customer;
 
 // user-packages
+import entity.Mappable;
 import entity.Organization;
 import entity.Organizations;
+import interaction.plants.OrganizationBuilder;
+import interaction.sender.Prompter;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -20,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
+import java.util.Map;
 
 public class TotalCommander extends Commander<Integer, Organization> {
   public TotalCommander(String envVar) {super(envVar);}
@@ -73,5 +78,30 @@ public class TotalCommander extends Commander<Integer, Organization> {
   public void man(String[] pages, PrintStream writer) {
     for (String p : pages)
       writer.println(p + "\n");
+  }
+  // There is a facility magic
+  @Override
+  public Mappable<Integer> cook(Prompter.ParamsCollector committed) {
+    return new OrganizationBuilder().make(committed);
+  }
+
+  @Override
+  public Integer search(Integer id) {
+    for (Map.Entry<Integer, Organization> enter : elements.entrySet())
+      if (id.equals(enter.getValue().getID()))
+        return enter.getKey();
+    return null;
+  }
+
+  @Override
+  public void remove(Integer key) {
+    elements.remove(key);
+  }
+  @Override
+  public String survey() {
+    StringBuilder blank = new StringBuilder("");
+    for (Map.Entry<Integer, Organization> enter : elements.entrySet())
+      blank.append("key: " + enter.getKey() + "; value: " + enter.getValue() + "\n");
+    return blank.toString();
   }
 }
