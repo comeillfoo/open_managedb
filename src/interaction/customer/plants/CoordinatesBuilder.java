@@ -1,4 +1,4 @@
-package interaction.plants;
+package interaction.customer.plants;
 
 import entity.Coordinates;
 import interaction.sender.Prompter;

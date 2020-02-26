@@ -2,7 +2,13 @@ package interaction.sender;
 
 import exceptions.InvalidClassNameException;
 import interaction.instructions.Command;
+import interaction.instructions.base.*;
+import interaction.instructions.extended.ExecuteScript;
+import interaction.instructions.extended.FilterContains;
+import interaction.instructions.extended.ReplaceIf;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +22,62 @@ public abstract class Prompter implements Invoker {
   }
   @Override public void signup(String command_name, Command instruct) {
     dictionary.put(command_name, instruct);
+  }
+  protected void invoke(String command_name) {
+    switch (command_name) {
+      case Help.NAME: dictionary.get(command_name).Execute(); break;
+      case Info.NAME: dictionary.get(command_name).Execute(); break;
+      case Show.NAME: dictionary.get(command_name).Execute(); break;
+      case Clear.NAME: dictionary.get(command_name).Execute(); break;
+      case Save.NAME: dictionary.get(command_name).Execute(); break;
+      case Exit.NAME: dictionary.get(command_name).Execute(); break;
+      default: pipe.println("There is no such command yet...");
+    }
+  }
+  protected void invoke(String command_name, String argument) {
+    switch (command_name) {
+      case Insert.NAME:{
+        Integer key = Integer.valueOf(argument);
+        ParamsCollector collection = getOrganization();
+        Insert command = (Insert) dictionary.get(command_name);
+        command.commit(key, collection);
+        command.Execute();
+      };
+      break;
+      case Update.NAME:{
+        int id = Integer.valueOf(argument);
+        ParamsCollector collection = getOrganization();
+        Update command = (Update) dictionary.get(command_name);
+        command.commit(id, collection);
+        command.Execute();
+      };
+      break;
+      case RemoveKey.NAME:{
+        Integer key = Integer.valueOf(argument);
+        RemoveKey command = (RemoveKey) dictionary.get(command_name);
+        command.openKey(key);
+        command.Execute();
+      };
+      break;
+      case ExecuteScript.NAME:{
+        FilePrompter filePrompter = null;
+        try(FileInputStream input = new FileInputStream(argument)) {
+          filePrompter = new FilePrompter(System.err, input);
+        } catch (IOException e) {
+          filePrompter.pipe.println(e.getMessage());
+          filePrompter.pipe.println(e.getStackTrace());
+        }
+      };
+      break;
+      case ReplaceIf.NAME:
+        // TODO: make an implementation
+        break;
+      case FilterContains.NAME:
+        // TODO: make an implementation
+        break;
+      default: pipe.println("There is no command with such number of arguments...");
+        break;
+    }
   }
   @Override public PrintStream getMainStream() {return pipe;}
   public final class ParamsCollector {
@@ -34,7 +96,7 @@ public abstract class Prompter implements Invoker {
     public double[] getFractions() { return fractions; }
     public String[] getLines() { return lines; }
   }
-  protected abstract ParamsCollector getParams(String className) throws InvalidClassNameException;
+  //TODO: check if some errors cast
   protected abstract ParamsCollector getOrganization();
   protected abstract ParamsCollector getCoordinates();
   protected abstract ParamsCollector getAddress();

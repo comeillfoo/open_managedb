@@ -44,4 +44,7 @@ public class Help extends Recorder {
   public static final String BRIEF = "выводит справку по доступным командам";
   public static final String SYNTAX = NAME;
   public static final String DESCRIPTION = "Выводит справку по доступным командам.";
+  @Override public int hashCode() {
+    return (NAME.hashCode() + BRIEF.hashCode() + SYNTAX.hashCode() + DESCRIPTION.hashCode()) % sieve.hashCode();
+  }
 }

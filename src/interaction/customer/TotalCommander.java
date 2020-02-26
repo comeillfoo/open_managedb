@@ -4,7 +4,7 @@ package interaction.customer;
 import entity.Mappable;
 import entity.Organization;
 import entity.Organizations;
-import interaction.plants.OrganizationBuilder;
+import interaction.customer.plants.OrganizationBuilder;
 import interaction.sender.Prompter;
 
 import javax.xml.bind.JAXBContext;
@@ -34,22 +34,23 @@ public class TotalCommander extends Commander<Integer, Organization> {
 
   @Override public List<Organization> load() {
     Organizations companies = null; // TODO: eliminate "maybe null" remaining
-    try(InputStream streamin = new FileInputStream(System.getenv(envVar));
+    try(InputStream streamin = new FileInputStream(System.getProperty("user.dir") + "/" + System.getenv(envVar));
         InputStreamReader reader = new InputStreamReader(streamin);
     ) {
       JAXBContext loader = null;
       try {
-        JAXBContext.newInstance(Organizations.class);
-        Unmarshaller subloader;
-        subloader = loader.createUnmarshaller();
+        loader = JAXBContext.newInstance(Organizations.class);
+        Unmarshaller subloader = loader.createUnmarshaller();
         companies = (Organizations) subloader.unmarshal(reader); // TODO: "maybe null"
       } catch (JAXBException e) {
         System.err.println(e.getErrorCode() + ": " + e.getMessage());
         System.err.println(e.getStackTrace());
+        System.exit(1);
       }
     } catch (IOException e) {
       System.err.println(e.getMessage());
       System.err.println(e.getStackTrace());
+      System.exit(1);
     }
     return companies.getCompanies();
   }

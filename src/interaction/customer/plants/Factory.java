@@ -1,4 +1,4 @@
-package interaction.plants;
+package interaction.customer.plants;
 
 import interaction.sender.Prompter;
 
