@@ -24,7 +24,7 @@ import interaction.instructions.base.*;
  *  приложением.
  * </p>
  * @author Come_1LL_F00 aka Lenar Khannanov
- * @author Leargy aka Anton Sushchkevich
+ * @author Leargy aka Anton Sushkevich
  * @see Invoker, Receiver, Prompter, Commander, TotalCommander, ConsolePrompter...
  */
 public class Shell {
