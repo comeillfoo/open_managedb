@@ -8,8 +8,7 @@ public class Show extends Recorder {
   public Show(Reciever reciever, PrintStream printer) {
     super(reciever, printer);
   }
-
-  @Override public void Execute() { printer.println(sieve.survey()); }
+  @Override public void execute() { printer.println(sieve.survey((subject)->(true))); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "show";
   public static final String BRIEF = "выводит все элементы в stdout";

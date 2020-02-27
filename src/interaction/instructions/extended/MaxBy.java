@@ -1,12 +1,10 @@
 package interaction.instructions.extended;
 
-import interaction.instructions.Command;
+import interaction.customer.Reciever;
+import interaction.instructions.Decree;
 
-public class MaxBy implements Command {
-  @Override public void Execute() {}
-  @Override public String toString() {return NAME + " : " + SYNTAX;}
-  public static final String NAME = "max_by";
-  public static final String BRIEF = "";
-  public static final String SYNTAX = NAME + "_creation_date";
-  public static final String DESCRIPTION = "";
+abstract class MaxBy extends Decree {
+  protected MaxBy(Reciever reciever) {
+    super(reciever);
+  }
 }

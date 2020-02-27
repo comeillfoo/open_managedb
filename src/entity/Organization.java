@@ -16,25 +16,33 @@ public class Organization implements Mappable<Integer> {
   @XmlAttribute(name = "name")
   @NotNull
   private final String name;
+  @Override public String getName() { return name; }
   @XmlElement(name = "coordinates")
   @NotNull
   private final Coordinates coordinates;
+  public Coordinates getCoordinates() { return coordinates; }
   @XmlTransient
   @NotNull
   private final ZonedDateTime creationDate = ZonedDateTime.now();
+  public ZonedDateTime getCreationDate() { return creationDate; }
   @XmlAttribute(name = "annual-turnover")
   private final float annualTurnover;
+  public float getAnnualTurnOver() { return annualTurnover; }
   @XmlElement(name = "fullname")
   @NotNull
   private final String fullname;
+  public String getFullname() { return fullname; }
   @XmlAttribute(name = "employees-count")
   private final int employeesCount;
+  public int getEmployees() { return employeesCount; }
   @XmlElement(name = "organization-type", required = true)
   @Nullable
   private final OrganizationType type;
+  public OrganizationType getType() { return type; }
   @XmlElement(name = "official-address")
   @Nullable
   private final Address officialAddress;
+  public Address getAddress() { return officialAddress; }
   public Organization() {
     id = hashCode() * count++;
     name  = "Tune-IT";
