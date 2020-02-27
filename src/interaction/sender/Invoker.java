@@ -15,7 +15,21 @@ import java.io.PrintStream;
  * @see Prompter, ConsolePrompter, FilePrompter, Receiver, Commander, TotalCommander
  */
 public interface Invoker {
+  /**
+   * Метод signup отвечает за добавление комманд в словарь комманд
+   * @param String command_name, Command instruct
+   * @return void
+   * @see Command
+   */
   void signup(String command_name, Command instruct);
+  /**
+   * Метод scan просит у пользователя ввод и анализирует: какая команда требуется.
+   * Возвращаемый тип показывает нужен ли дальнейший ввод.
+   * @param no parameters
+   *
+   *
+   * @return boolean is input ended
+   */
   boolean scan();
   PrintStream getMainStream();
 }
