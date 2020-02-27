@@ -6,10 +6,12 @@ import com.sun.istack.internal.Nullable;
 import javax.xml.bind.annotation.*;
 import java.time.ZonedDateTime;
 
-@XmlRootElement(name="organization")
+@XmlRootElement(name = "organization")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Mappable<Integer> {
-  private static int count = 0;
+  @XmlTransient
+  private static int count = 1;
+  @XmlAttribute(name = "id")
   private final int id; // generates automatically
   @XmlAttribute(name = "name")
   @NotNull
@@ -17,26 +19,36 @@ public class Organization implements Mappable<Integer> {
   @XmlElement(name = "coordinates")
   @NotNull
   private final Coordinates coordinates;
+  @XmlTransient
   @NotNull
   private final ZonedDateTime creationDate = ZonedDateTime.now();
-  @XmlAttribute(name = "turnover")
+  @XmlAttribute(name = "annual-turnover")
   private final float annualTurnover;
   @XmlElement(name = "fullname")
   @NotNull
   private final String fullname;
-  @XmlAttribute(name = "employees")
+  @XmlAttribute(name = "employees-count")
   private final int employeesCount;
-  @XmlElement(name = "type")
+  @XmlElement(name = "organization-type", required = true)
   @Nullable
   private final OrganizationType type;
-  @XmlElement(name = "officialaddress")
+  @XmlElement(name = "official-address")
   @Nullable
   private final Address officialAddress;
-
+  public Organization() {
+    id = hashCode() * count++;
+    name  = "Tune-IT";
+    coordinates = new Coordinates(25, 14.2f);
+    annualTurnover = 2.28f;
+    fullname = "SergeBlonde";
+    employeesCount = 0;
+    type = OrganizationType.PUBLIC;
+    officialAddress = new Address("128-147-14", new Location(25, 34L, 18));
+  }
   public Organization(String name, Coordinates coordinates,
                       float annualTurnover, String fullname,
                       int employeesCount, OrganizationType type, Address officialAddress) {
-    id = count++;
+    id = hashCode() * count++;
     this.name = name;
     this.coordinates = coordinates;
     this.annualTurnover = annualTurnover;

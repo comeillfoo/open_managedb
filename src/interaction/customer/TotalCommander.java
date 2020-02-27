@@ -1,9 +1,7 @@
 package interaction.customer;
 
 // user-packages
-import entity.Mappable;
-import entity.Organization;
-import entity.Organizations;
+import entity.*;
 import interaction.customer.plants.OrganizationBuilder;
 import interaction.sender.Prompter;
 
@@ -78,7 +76,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
   @Override
   public void man(String[] pages, PrintStream writer) {
     for (String p : pages)
-      writer.println(p + "\n");
+      writer.println(p);
   }
   // There is a facility magic
   @Override

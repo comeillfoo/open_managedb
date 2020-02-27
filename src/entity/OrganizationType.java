@@ -1,16 +1,14 @@
 package entity;
 
+import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "organizationtype")
+@XmlType(name = "organization-type")
+@XmlEnum(value = String.class)
 public enum OrganizationType {
-  @XmlEnumValue(value = "public")
-  PUBLIC,
-  @XmlEnumValue(value = "trust")
-  TRUST,
-  @XmlEnumValue(value = "private_limited_company")
-  PRIVATE_LIMITED_COMPANY,
-  @XmlEnumValue(value = "open_joint_stock_company")
-  OPEN_JOINT_STOCK_COMPANY;
+  @XmlEnumValue("public") PUBLIC,
+  @XmlEnumValue("trust") TRUST,
+  @XmlEnumValue("private-limited-company") PRIVATE_LIMITED_COMPANY,
+  @XmlEnumValue("open-joint-stock-company") OPEN_JOINT_STOCK_COMPANY;
 }

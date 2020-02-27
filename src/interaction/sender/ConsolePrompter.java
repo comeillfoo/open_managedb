@@ -9,6 +9,7 @@ import interaction.instructions.extended.ReplaceIf;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Scanner;
 
 public final class ConsolePrompter extends Prompter {
@@ -16,6 +17,7 @@ public final class ConsolePrompter extends Prompter {
   public ConsolePrompter(PrintStream pipeout, InputStream pipein) {
     super(pipeout);
     interrogater = new Scanner(pipein);
+    interrogater.useLocale(Locale.UK);
   }
   // TODO: apply a NULL-safety code
   @Override protected ParamsCollector getOrganization() {
@@ -24,7 +26,8 @@ public final class ConsolePrompter extends Prompter {
     pipe.println("Entering Organization.coordinates as Coordinates:");
     ParamsCollector coordinates = getCoordinates();
     pipe.print("Enter some float fraction Organization.annualTurnover: ");
-    float annualTurnover = interrogater.nextFloat();
+    float annualTurnover = (float) interrogater.nextDouble();
+    interrogater.nextLine();
     pipe.print("Enter string Organization.fullname: ");
     String fullname = interrogater.nextLine();
     pipe.print("Enter an integer Organization.employeesCount: ");
@@ -33,6 +36,7 @@ public final class ConsolePrompter extends Prompter {
     for (OrganizationType orgtype : OrganizationType.values()) {
       pipe.println("\t+ " + orgtype);
     }
+    interrogater.nextLine();
     String enumName = interrogater.nextLine(); // TODO: possibly absence of enumeration constant
     pipe.println("Entering Organization.officialAddress as Address:");
     ParamsCollector officialAddress = getAddress();
@@ -46,7 +50,7 @@ public final class ConsolePrompter extends Prompter {
     pipe.print("Enter an integer Coordinates.x: ");
     int x = interrogater.nextInt();
     pipe.print("Enter a float Coordinates.y: ");
-    Float y = interrogater.nextFloat();
+    Float y = (float) interrogater.nextDouble();
     return new ParamsCollector(null, new long[]{(long) x}, new double[]{(double) y}, null);
   }
   @Override protected ParamsCollector getAddress() {
