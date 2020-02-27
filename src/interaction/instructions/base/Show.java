@@ -1,9 +1,15 @@
 package interaction.instructions.base;
 
-import interaction.instructions.Command;
+import interaction.customer.Reciever;
 
-public class Show implements Command {
-  @Override public void Execute() {}
+import java.io.PrintStream;
+
+public class Show extends Recorder {
+  public Show(Reciever reciever, PrintStream printer) {
+    super(reciever, printer);
+  }
+
+  @Override public void Execute() { printer.println(sieve.survey()); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "show";
   public static final String BRIEF = "выводит все элементы в stdout";

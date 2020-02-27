@@ -1,9 +1,12 @@
 package interaction.instructions.base;
 
-import interaction.instructions.Command;
+import interaction.customer.Reciever;
+import java.io.PrintStream;
 
-public class Info implements Command {
-  @Override public void Execute() {}
+public class Info extends Recorder {
+  public Info(Reciever reciever, PrintStream printer) {super(reciever, printer);}
+
+  @Override public void Execute() { printer.println(sieve.review()); }
   @Override public String toString() {
     return NAME + " : " + SYNTAX;
   }

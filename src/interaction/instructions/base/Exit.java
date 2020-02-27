@@ -1,9 +1,11 @@
 package interaction.instructions.base;
 
-import interaction.instructions.Command;
+import interaction.customer.Reciever;
+import interaction.instructions.Decree;
 
-public class Exit implements Command {
-  @Override public void Execute() {}
+public class Exit extends Decree {
+  public Exit(Reciever reciever) {super(reciever);}
+  @Override public void Execute() {System.exit(0);} // TODO: check if it is bad decision;
   public String ToString() {
     return NAME + " : " + SYNTAX;
   }
