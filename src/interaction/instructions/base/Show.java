@@ -15,6 +15,6 @@ public class Show extends Recorder {
   public static final String BRIEF = "выводит все элементы в stdout";
   public static final String SYNTAX = NAME;
   public static final String DESCRIPTION = "Выводит в стандартный поток вывода все элементы\n\t" +
-      "коллекции в их строковом представлении. Для\n\t" +
-      "всех элементов коллекции вызывается метод toString().";
+          "коллекции в их строковом представлении. Для\n\t" +
+          "всех элементов коллекции вызывается метод toString().";
 }
