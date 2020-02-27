@@ -10,6 +10,23 @@ import interaction.sender.Invoker;
 import interaction.sender.ConsolePrompter;
 import interaction.instructions.base.*;
 
+/**
+ * Shell — это главный класс во всей программе,
+ * он объединяет две главные сущности паттерна &lq;Command&rq;:
+ * <ul>
+ *  <li>{@link Invoker}: interface;</li>
+ *  <li>{@link Receiver}: interface;</li>
+ * </ul>
+ * <p>
+ *  Также в Shell производятся все действия по подготовке (загрузка коллекции,
+ *  определение списка доступных комманд, с указанием входных и выходных потоков и т.п.).
+ *  Лишь те команды, которые определены в статическом блоке инициализации смогут исполнятся
+ *  приложением.
+ * </p>
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushchkevich
+ * @see Invoker, Receiver, Prompter, Commander, TotalCommander, ConsolePrompter...
+ */
 public class Shell {
   private static final String environment = "DBPATH"; // title of environment variable
   private static final Reciever<Integer, Organization> GeneralOperator = new TotalCommander(environment); // includes loading
