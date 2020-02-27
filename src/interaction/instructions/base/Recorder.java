@@ -5,7 +5,7 @@ import interaction.instructions.Decree;
 
 import java.io.PrintStream;
 
-abstract class Recorder extends Decree {
+public abstract class Recorder extends Decree {
   protected final PrintStream printer;
   protected Recorder(Reciever reciever, PrintStream printer) {
     super(reciever);

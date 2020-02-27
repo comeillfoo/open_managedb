@@ -1,24 +1,16 @@
 package interaction.instructions.base;
 
 import interaction.customer.Reciever;
-import interaction.instructions.Decree;
 
-public class Show extends Decree {
+import java.io.PrintStream;
 
-  public Show(Reciever reciever) {
-    super(reciever);
+public class Show extends Recorder {
+  public Show(Reciever reciever, PrintStream printer) {
+    super(reciever, printer);
   }
 
-  @Override
-  public void Execute() {
-    sieve.show();
-  }
-
-  @Override
-  public String toString() {
-    return NAME + " : " + SYNTAX;
-  }
-
+  @Override public void Execute() { printer.println(sieve.survey()); }
+  @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "show";
   public static final String BRIEF = "выводит все элементы в stdout";
   public static final String SYNTAX = NAME;

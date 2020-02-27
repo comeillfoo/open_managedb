@@ -13,9 +13,11 @@ public class Coordinates {
   @XmlAttribute(name = "x")
   private final int x;
   @XmlAttribute(name = "y")
-  @NotNull
-  private final Float y;
-
+  @NotNull private final Float y;
+  public Coordinates() {
+    x = 0;
+    y = 0f;
+  }
   public Coordinates(int x, Float y) {
     this.x = x;
     this.y = y;

@@ -12,9 +12,11 @@ public class Address {
   @NotNull
   private final String zipCode;
   @XmlElement(name = "town")
-  @Nullable
-  private final Location town;
-
+  @Nullable private final Location town;
+  public Address() {
+    zipCode = "";
+    town = new Location(0, 0L, 0);
+  }
   public Address(String zipCode, Location town) {
     this.zipCode = zipCode;
     this.town = town;

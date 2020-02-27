@@ -8,11 +8,11 @@ import interaction.sender.ConsolePrompter;
 import interaction.instructions.base.*;
 
 public class Shell {
-  private final String environment = "DBPATH"; // title of environment variable
-  private final Reciever<Integer, Organization> GeneralOperator = new TotalCommander(environment); // includes loading
-  private final Invoker GeneralCaller = new ConsolePrompter(System.out, System.in);
+  private static final String environment = "DBPATH"; // title of environment variable
+  private static final Reciever<Integer, Organization> GeneralOperator = new TotalCommander(environment); // includes loading
+  private static final Invoker GeneralCaller = new ConsolePrompter(System.out, System.in);
   // starting actions
-  {
+  static {
     GeneralCaller.signup(Add.NAME, new Add(GeneralOperator));
     GeneralCaller.signup(Clear.NAME, new Clear(GeneralOperator));
     GeneralCaller.signup(Exit.NAME, new Exit(GeneralOperator));
@@ -21,10 +21,13 @@ public class Shell {
     GeneralCaller.signup(Insert.NAME, new Insert(GeneralOperator));
     GeneralCaller.signup(RemoveKey.NAME, new RemoveKey(GeneralOperator));
     GeneralCaller.signup(Save.NAME, new Save(GeneralOperator));
-    GeneralCaller.signup(Show.NAME, new Show(GeneralOperator));
+    GeneralCaller.signup(Show.NAME, new Show(GeneralOperator, GeneralCaller.getMainStream()));
     GeneralCaller.signup(Update.NAME, new Update(GeneralOperator));
     // TODO: sign up extended instructions...
   }
   public static void main(String[] args) {
+    while (true) {
+      while (GeneralCaller.scan());
+    }
   }
 }

@@ -11,13 +11,13 @@ public class Help extends Recorder {
 
   @Override public void Execute() {sieve.man(pages, printer);}
   private String makepage(String command_name, String brief, String syntax, String description) {
-    StringBuilder built = new StringBuilder(">" + command_name.toUpperCase());
+    StringBuilder built = new StringBuilder("Г " + command_name.toUpperCase() + "\n");
     built.append("name:\n");
     built.append("\t" + command_name + " -- " + brief + "\n");
     built.append("synopsys:\n");
-    built.append("\t" + syntax);
+    built.append("\t" + syntax + "\n");
     built.append("description:\n");
-    built.append("\t" + description + "\n");
+    built.append("\t" + description + "\nL");
     return built.toString();
   }
   // initialize block
@@ -45,4 +45,7 @@ public class Help extends Recorder {
   public static final String BRIEF = "выводит справку по доступным командам";
   public static final String SYNTAX = NAME;
   public static final String DESCRIPTION = "Выводит справку по доступным командам.";
+  @Override public int hashCode() {
+    return (NAME.hashCode() + BRIEF.hashCode() + SYNTAX.hashCode() + DESCRIPTION.hashCode()) % sieve.hashCode();
+  }
 }

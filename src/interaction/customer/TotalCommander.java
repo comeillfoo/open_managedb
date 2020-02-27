@@ -1,9 +1,9 @@
 package interaction.customer;
 
 // user-packages
-import entity.Organization;
-import entity.Organizations;
-import interaction.sender.ConsolePrompter;
+import entity.*;
+import interaction.customer.plants.OrganizationBuilder;
+import interaction.sender.Prompter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -43,22 +43,23 @@ public class TotalCommander extends Commander<Integer, Organization> {
 
   @Override public List<Organization> load() {
     Organizations companies = null; // TODO: eliminate "maybe null" remaining
-    try(InputStream streamin = new FileInputStream(System.getenv(envVar));
+    try(InputStream streamin = new FileInputStream(System.getProperty("user.dir") + "/" + System.getenv(envVar));
         InputStreamReader reader = new InputStreamReader(streamin);
     ) {
       JAXBContext loader = null;
       try {
-        JAXBContext.newInstance(Organizations.class);
-        Unmarshaller subloader;
-        subloader = loader.createUnmarshaller();
+        loader = JAXBContext.newInstance(Organizations.class);
+        Unmarshaller subloader = loader.createUnmarshaller();
         companies = (Organizations) subloader.unmarshal(reader); // TODO: "maybe null"
       } catch (JAXBException e) {
         System.err.println(e.getErrorCode() + ": " + e.getMessage());
         System.err.println(e.getStackTrace());
+        System.exit(1);
       }
     } catch (IOException e) {
       System.err.println(e.getMessage());
       System.err.println(e.getStackTrace());
+      System.exit(1);
     }
     return companies.getCompanies();
   }
@@ -86,7 +87,32 @@ public class TotalCommander extends Commander<Integer, Organization> {
   @Override
   public void man(String[] pages, PrintStream writer) {
     for (String p : pages)
-      writer.println(p + "\n");
+      writer.println(p);
+  }
+  // There is a facility magic
+  @Override
+  public Mappable<Integer> cook(Prompter.ParamsCollector committed) {
+    return new OrganizationBuilder().make(committed);
+  }
+
+  @Override
+  public Integer search(Integer id) {
+    for (Map.Entry<Integer, Organization> enter : elements.entrySet())
+      if (id.equals(enter.getValue().getID()))
+        return enter.getKey();
+    return null;
+  }
+
+  @Override
+  public void remove(Integer key) {
+    elements.remove(key);
+  }
+  @Override
+  public String survey() {
+    StringBuilder blank = new StringBuilder("");
+    for (Map.Entry<Integer, Organization> enter : elements.entrySet())
+      blank.append("key: " + enter.getKey() + "; value: " + enter.getValue() + "\n");
+    return blank.toString();
   }
 
   @Override

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<organizations>
+    <organization id="114010" name="copros" annual-turnover="12.4" employees-count="3">
+        <coordinates x="25" y="14.4"/>
+        <fullname>Copros inc.</fullname>
+        <organization-type>trust</organization-type>
+        <official-address zipcode="148-132-14">
+            <town x="25" y="25" z="25.0"/>
+        </official-address>
+    </organization>
+    <organization id="171015" name="manguz" annual-turnover="0.0" employees-count="1">
+        <coordinates x="288" y="145.256"/>
+        <fullname>Manguz Entertainment</fullname>
+        <organization-type>open-joint-stock-company</organization-type>
+        <official-address zipcode="192-148-12">
+            <town x="143" y="128" z="9.75"/>
+        </official-address>
+    </organization>
+</organizations>

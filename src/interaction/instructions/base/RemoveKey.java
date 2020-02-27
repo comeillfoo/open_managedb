@@ -1,24 +1,21 @@
 package interaction.instructions.base;
 
+import entity.Organization;
 import interaction.customer.Reciever;
 import interaction.instructions.Decree;
 
 public class RemoveKey extends Decree {
-
-  public RemoveKey(Reciever sieve) {
-    super(sieve);
+  private Integer key;
+  public RemoveKey(Reciever<Integer, Organization> reciever) {
+    super(reciever);
   }
-
-  @Override
-  public void Execute() {
-    sieve.removeKey();
+  public void openKey(Integer key) {
+    this.key = key;
   }
-
-  @Override
-  public String toString() {
-    return NAME + " : " + SYNTAX;
+  @Override public void Execute() {
+    sieve.remove(key);
   }
-
+  @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "remove_key";
   public static final String BRIEF = "";
   public static final String SYNTAX = NAME + " [key]";

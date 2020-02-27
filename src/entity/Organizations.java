@@ -12,7 +12,10 @@ import java.util.Map;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organizations {
   @XmlElement(name = "organization")
-  private final List<Organization> companies;
+  private List<Organization> companies;
+  public Organizations() {
+    companies = new ArrayList<>();
+  }
   public Organizations(List<Organization> companies) {
     this.companies = companies;
   }

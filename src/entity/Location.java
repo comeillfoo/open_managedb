@@ -17,7 +17,9 @@ public class Location {
   private final Long y;
   @XmlAttribute(name = "z")
   private final double z;
-
+  public Location() {
+    x = 0L; y = 0L; z = 0;
+  }
   public Location(long x, Long y, double z) {
     this.x = x;
     this.y = y;
