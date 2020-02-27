@@ -5,7 +5,7 @@ import interaction.instructions.Decree;
 
 public class Clear extends Decree {
   public Clear(Reciever reciever) {super(reciever);}
-  @Override public void Execute() {sieve.clear();}
+  @Override public void execute() {sieve.clear();}
   @Override public String toString() {
     return NAME + " : " + SYNTAX;
   }

@@ -4,7 +4,7 @@ import interaction.customer.Reciever;
 import interaction.sender.Prompter;
 
 public class Add extends Committer {
-  @Override public void Execute() {
+  @Override public void execute() {
     sieve.add(sieve.cook(committed));
   }
   public Add(Reciever reciever) {super(reciever);}

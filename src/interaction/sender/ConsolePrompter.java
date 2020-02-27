@@ -4,8 +4,6 @@ import entity.OrganizationType;
 import exceptions.InvalidClassNameException;
 import interaction.instructions.base.*;
 import interaction.instructions.extended.ExecuteScript;
-import interaction.instructions.extended.FilterContains;
-import interaction.instructions.extended.ReplaceIf;
 
 import java.io.*;
 import java.util.HashMap;
