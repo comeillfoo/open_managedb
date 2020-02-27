@@ -7,7 +7,7 @@ public class ExecuteScript extends Decree {
   protected ExecuteScript(Reciever reciever) {
     super(reciever);
   }
-  @Override public void Execute() {
+  @Override public void execute() {
 
   }
   @Override public String toString() {

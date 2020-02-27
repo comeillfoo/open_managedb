@@ -12,7 +12,7 @@ public class RemoveKey extends Decree {
   public void openKey(Integer key) {
     this.key = key;
   }
-  @Override public void Execute() {
+  @Override public void execute() {
     sieve.remove(key);
   }
   @Override public String toString() {return NAME + " : " + SYNTAX;}

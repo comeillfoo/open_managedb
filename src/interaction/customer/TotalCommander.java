@@ -3,6 +3,7 @@ package interaction.customer;
 // user-packages
 import entity.*;
 import interaction.customer.plants.OrganizationBuilder;
+import interaction.instructions.extended.Indicator;
 import interaction.sender.Prompter;
 
 import javax.xml.bind.JAXBContext;
@@ -29,6 +30,10 @@ public class TotalCommander extends Commander<Integer, Organization> {
   // base methods
   @Override public void add(Organization element) { elements.put(element.getKey(), element);}
   @Override public void add(Integer key, Organization element) {elements.put(key, element);}
+  public void add(Integer key, Organization element, Indicator sign) {
+    if (sign.detect(lookFor(key)))
+      add(key, element);
+  }
 
   @Override public List<Organization> load() {
     Organizations companies = null; // TODO: eliminate "maybe null" remaining
@@ -80,7 +85,7 @@ public class TotalCommander extends Commander<Integer, Organization> {
   }
   // There is a facility magic
   @Override
-  public Mappable<Integer> cook(Prompter.ParamsCollector committed) {
+  public Organization cook(Prompter.ParamsCollector committed) {
     return new OrganizationBuilder().make(committed);
   }
 
@@ -91,16 +96,20 @@ public class TotalCommander extends Commander<Integer, Organization> {
         return enter.getKey();
     return null;
   }
-
+  @Override
+  public Organization lookFor(Integer key) {
+    return elements.get(key);
+  }
   @Override
   public void remove(Integer key) {
     elements.remove(key);
   }
   @Override
-  public String survey() {
+  public String survey(Indicator litmus) {
     StringBuilder blank = new StringBuilder("");
     for (Map.Entry<Integer, Organization> enter : elements.entrySet())
-      blank.append("key: " + enter.getKey() + "; value: " + enter.getValue() + "\n");
+      if (litmus.detect(enter.getValue()))
+        blank.append("key: " + enter.getKey() + "; value: " + enter.getValue() + "\n");
     return blank.toString();
   }
 }

@@ -16,7 +16,7 @@ public class Insert extends Committer {
     this.key = key;
     return commit(element);
   }
-  @Override public void Execute() { sieve.add(key, sieve.cook(committed)); }
+  @Override public void execute() { sieve.add(key, sieve.cook(committed)); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "insert";
   public static final String BRIEF = "";

@@ -12,8 +12,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Coordinates {
   @XmlAttribute(name = "x")
   private final int x;
+  public int getX() {return x;}
   @XmlAttribute(name = "y")
   @NotNull private final Float y;
+  public float getY() {return y;}
   public Coordinates() {
     x = 0;
     y = 0f;

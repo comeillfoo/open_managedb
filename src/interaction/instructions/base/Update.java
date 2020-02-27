@@ -8,7 +8,7 @@ public class Update extends Committer {
   public Update(Reciever reciever) {
     super(reciever);
   }
-  @Override public void Execute() {sieve.add(sieve.search(id), sieve.cook(committed));}
+  @Override public void execute() {sieve.add(sieve.search(id), sieve.cook(committed));}
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "update";
   public static final String BRIEF = "";
