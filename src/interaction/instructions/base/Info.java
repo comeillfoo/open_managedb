@@ -14,7 +14,7 @@ public class Info extends Recorder {
   public static final String BRIEF = "выводит информацию о коллекции";
   public static final String SYNTAX = NAME;
   public static final String DESCRIPTION = "Выводит в стандартный поток вывода информацию о загруженной коллекции:\n\t" +
-      "] тип ее элементов;\n\t" +
-      "] дату инициализации;\n\t" +
-      "] количество элементов;";
+      "* тип ее элементов;\n\t" +
+      "* дату инициализации;\n\t" +
+      "* количество элементов;";
 }

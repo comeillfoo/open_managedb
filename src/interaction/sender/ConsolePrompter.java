@@ -24,12 +24,10 @@ public final class ConsolePrompter extends Prompter {
     String tempEnumName = "";
     String enumName = "";
     ParamsCollector officialAddress = null;
-
     while (true) {
       try {
         pipe.print("Enter string Organization.name: ");
         name = interrogater.nextLine();
-
         pipe.print("Enter string Organization.fullname: ");
         fullName = interrogater.nextLine();
 
@@ -37,8 +35,6 @@ public final class ConsolePrompter extends Prompter {
         for (OrganizationType orgtype : OrganizationType.values()) {
           pipe.println("\t+ " + orgtype);
         }
-        pipe.print("> ");
-
         while (true) {
           tempEnumName = interrogater.nextLine();
           switch (tempEnumName.toLowerCase()){
@@ -54,26 +50,24 @@ public final class ConsolePrompter extends Prompter {
               for (OrganizationType orgtype : OrganizationType.values()) {
                 pipe.println("\t+ " + orgtype);
               }
-              pipe.print("> ");
               continue;
           }
           break;
         }
         pipe.print("Enter an integer Organization.employeesCount: ");
         employeesCount = interrogater.nextInt();
-
+        interrogater.nextLine();
         pipe.print("Enter some float fraction Organization.annualTurnover: ");
         annualTurnover = (float) interrogater.nextDouble();
-
+        interrogater.nextLine();
         pipe.println("Entering Organization.coordinates as Coordinates:");
         coordinates = getCoordinates();
-
         pipe.println("Entering Organization.officialAddress as Address:");
         officialAddress = getAddress();
         break;
       } catch (InputMismatchException e) {
         interrogater.nextLine();
-        System.err.println("Error:Incorrect data format!");
+        System.err.println("Error: Incorrect data format!");
         System.out.println();
       }
     }
@@ -86,8 +80,10 @@ public final class ConsolePrompter extends Prompter {
   @Override protected ParamsCollector getCoordinates() {
     pipe.print("Enter an integer Coordinates.x: ");
     int x = interrogater.nextInt();
+    interrogater.nextLine();
     pipe.print("Enter a float Coordinates.y: ");
     Float y = (float) interrogater.nextDouble();
+    interrogater.nextLine();
     return new ParamsCollector(null, new long[]{(long) x}, new double[]{(double) y}, null);
   }
   @Override protected ParamsCollector getAddress() {
@@ -100,10 +96,13 @@ public final class ConsolePrompter extends Prompter {
   @Override protected ParamsCollector getLocation() {
     pipe.print("Enter a long integer Location.x: ");
     long x = interrogater.nextLong();
+    interrogater.nextLine();
     pipe.print("Enter a long integer Location.y: ");
     long y = interrogater.nextLong();
+    interrogater.nextLine();
     pipe.print("Enter a double fraction Location.z: ");
     double z = interrogater.nextDouble();
+    interrogater.nextLine();
     return new ParamsCollector(null, new long[]{x, y}, new double[]{z},null);
   }
   @Override public boolean scan() {
