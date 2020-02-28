@@ -12,11 +12,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Location {
   @XmlAttribute(name = "x")
   private final long x;
+  public long getX() { return x; }
   @XmlAttribute(name = "y")
-  @NotNull
-  private final Long y;
+  @NotNull private final Long y;
+  public long getY() { return y; }
   @XmlAttribute(name = "z")
   private final double z;
+  public double getZ() { return z; }
   public Location() {
     x = 0L; y = 0L; z = 0;
   }

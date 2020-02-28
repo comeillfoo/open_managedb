@@ -1,12 +1,12 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.sender.Prompter;
 
 public class Insert extends Committer {
   private Integer key;
-  public Insert(Reciever reciever) {
-    super(reciever);
+  public Insert(Receiver receiver) {
+    super(receiver);
   }
   @Override protected boolean commit(Prompter.ParamsCollector element) {
     committed = element;
@@ -16,7 +16,7 @@ public class Insert extends Committer {
     this.key = key;
     return commit(element);
   }
-  @Override public void Execute() { sieve.add(key, sieve.cook(committed)); }
+  @Override public void execute() { sieve.add(key, sieve.cook(committed)); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
 
   public static final String NAME = "insert";

@@ -1,12 +1,19 @@
 package interaction.instructions.extended;
 
-import interaction.instructions.Command;
+import interaction.customer.Receiver;
+import interaction.sender.Prompter;
 
-public class RemoveThan implements Command {
-  @Override public void Execute() {}
-  @Override public String toString() {return NAME + " : " + SYNTAX;}
-  public static final String NAME = "remove";
-  public static final String BRIEF = "";
-  public static final String SYNTAX = NAME + "_lower {element}";
-  public static final String DESCRIPTION = "";
+abstract class RemoveThan extends ReplaceIf {
+  protected RemoveThan(Receiver receiver) {
+    super(receiver);
+  }
+
+  @Override
+  protected boolean commit(Prompter.ParamsCollector element) {
+    if (element != null) {
+      committed = element;
+      return true;
+    }
+    return false;
+  }
 }

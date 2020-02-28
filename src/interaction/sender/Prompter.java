@@ -1,11 +1,8 @@
 package interaction.sender;
 
-import exceptions.InvalidClassNameException;
 import interaction.instructions.Command;
 import interaction.instructions.base.*;
-import interaction.instructions.extended.ExecuteScript;
-import interaction.instructions.extended.FilterContains;
-import interaction.instructions.extended.ReplaceIf;
+import interaction.instructions.extended.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,12 +29,12 @@ public abstract class Prompter implements Invoker {
   }
   protected void invoke(String command_name) {
     switch (command_name) {
-      case Help.NAME: dictionary.get(command_name).Execute(); break;
-      case Info.NAME: dictionary.get(command_name).Execute(); break;
-      case Show.NAME: dictionary.get(command_name).Execute(); break;
-      case Clear.NAME: dictionary.get(command_name).Execute(); break;
-      case Save.NAME: dictionary.get(command_name).Execute(); break;
-      case Exit.NAME: dictionary.get(command_name).Execute(); break;
+      case Help.NAME: dictionary.get(command_name).execute(); break;
+      case Info.NAME: dictionary.get(command_name).execute(); break;
+      case Show.NAME: dictionary.get(command_name).execute(); break;
+      case Clear.NAME: dictionary.get(command_name).execute(); break;
+      case Save.NAME: dictionary.get(command_name).execute(); break;
+      case Exit.NAME: dictionary.get(command_name).execute(); break;
       default: pipe.println("There is no such command yet...");
     }
   }
@@ -48,7 +45,7 @@ public abstract class Prompter implements Invoker {
         ParamsCollector collection = getOrganization();
         Insert command = (Insert) dictionary.get(command_name);
         command.commit(key, collection);
-        command.Execute();
+        command.execute();
       };
       break;
       case Update.NAME:{
@@ -56,14 +53,14 @@ public abstract class Prompter implements Invoker {
         ParamsCollector collection = getOrganization();
         Update command = (Update) dictionary.get(command_name);
         command.commit(id, collection);
-        command.Execute();
+        command.execute();
       };
       break;
       case RemoveKey.NAME:{
         Integer key = Integer.valueOf(argument);
         RemoveKey command = (RemoveKey) dictionary.get(command_name);
         command.openKey(key);
-        command.Execute();
+        command.execute();
       };
       break;
       case ExecuteScript.NAME:{
@@ -76,10 +73,13 @@ public abstract class Prompter implements Invoker {
         }
       };
       break;
-      case ReplaceIf.NAME:
+      case ReplaceIfLower.NAME:
         // TODO: make an implementation
         break;
-      case FilterContains.NAME:
+      case ReplaceIfGreater.NAME:
+        // TODO: make an implementation
+        break;
+      case FilterContainsName.NAME:
         // TODO: make an implementation
         break;
       default: pipe.println("There is no command with such number of arguments...");

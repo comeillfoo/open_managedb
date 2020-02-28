@@ -1,15 +1,15 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.extended.*;
 import java.io.PrintStream;
 
 public class Help extends Recorder {
-  private final String[] pages = new String[16];
+  private final String[] pages = new String[17];
 
-  public Help(Reciever reciever, PrintStream printer) {super(reciever, printer);}
+  public Help(Receiver receiver, PrintStream printer) {super(receiver, printer);}
 
-  @Override public void Execute() {sieve.man(pages, printer);}
+  @Override public void execute() {sieve.man(pages, printer);}
   private String makepage(String command_name, String brief, String syntax, String description) {
     StringBuilder built = new StringBuilder("Г " + command_name.toUpperCase() + "\n");
     built.append("name:\n");
@@ -32,12 +32,13 @@ public class Help extends Recorder {
     pages[7] = makepage(Save.NAME, Save.BRIEF, Save.SYNTAX, Save.DESCRIPTION);
     pages[8] = makepage(Show.NAME, Show.BRIEF, Show.SYNTAX, Show.DESCRIPTION);
     pages[9] = makepage(Update.NAME, Update.BRIEF, Update.SYNTAX, Update.DESCRIPTION);
-    pages[10] = makepage(FilterContains.NAME, FilterContains.BRIEF, FilterContains.SYNTAX, FilterContains.DESCRIPTION);
-    pages[11] = makepage(MaxBy.NAME, MaxBy.BRIEF, MaxBy.SYNTAX, MaxBy.DESCRIPTION);
-    pages[12] = makepage(RemoveThan.NAME, RemoveThan.BRIEF, RemoveThan.SYNTAX, RemoveThan.DESCRIPTION);
-    pages[13] = makepage(ReplaceIf.NAME, ReplaceIf.BRIEF, ReplaceIf.SYNTAX, ReplaceIf.DESCRIPTION);
-    pages[14] = makepage(SumOfAnnual.NAME, SumOfAnnual.BRIEF, SumOfAnnual.SYNTAX, SumOfAnnual.DESCRIPTION);
-    pages[15] = makepage(ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX, ExecuteScript.DESCRIPTION);
+    pages[10] = makepage(FilterContainsName.NAME, FilterContainsName.BRIEF, FilterContainsName.SYNTAX, FilterContainsName.DESCRIPTION);
+    pages[11] = makepage(MaxByDate.NAME, MaxByDate.BRIEF, MaxByDate.SYNTAX, MaxByDate.DESCRIPTION);
+    pages[12] = makepage(RemoveLower.NAME, RemoveLower.BRIEF, RemoveLower.SYNTAX, RemoveLower.DESCRIPTION);
+    pages[13] = makepage(ReplaceIfLower.NAME, ReplaceIfLower.BRIEF, ReplaceIfLower.SYNTAX, ReplaceIfLower.DESCRIPTION);
+    pages[14] = makepage(ReplaceIfGreater.NAME, ReplaceIfGreater.BRIEF, ReplaceIfGreater.SYNTAX, ReplaceIfGreater.DESCRIPTION);
+    pages[15] = makepage(SumOfAnnualTurnover.NAME, SumOfAnnualTurnover.BRIEF, SumOfAnnualTurnover.SYNTAX, SumOfAnnualTurnover.DESCRIPTION);
+    pages[16] = makepage(ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX, ExecuteScript.DESCRIPTION);
   }
 
   @Override public String toString() {return NAME + " : " + SYNTAX;}

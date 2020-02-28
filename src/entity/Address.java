@@ -9,10 +9,11 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Address {
   @XmlAttribute(name = "zipcode")
-  @NotNull
-  private final String zipCode;
+  @NotNull private final String zipCode;
+  public String getZipCode() { return zipCode; }
   @XmlElement(name = "town")
   @Nullable private final Location town;
+  public Location getTown() { return town; }
   public Address() {
     zipCode = "";
     town = new Location(0, 0L, 0);

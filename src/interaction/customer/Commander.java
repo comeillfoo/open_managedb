@@ -4,7 +4,7 @@ import entity.Mappable;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract class Commander<K, V extends Mappable<K>> implements Reciever<K, V> {
+abstract class Commander<K, V extends Mappable<K>> implements Receiver<K, V> {
   protected final Map<K, V> elements;
   protected final String envVar;
   protected Commander(String envVar) {

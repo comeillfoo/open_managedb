@@ -2,6 +2,8 @@ package interaction.sender;
 
 import entity.OrganizationType;
 import exceptions.InvalidClassNameException;
+import interaction.instructions.base.*;
+import interaction.instructions.extended.ExecuteScript;
 
 import java.io.*;
 import java.util.HashMap;
