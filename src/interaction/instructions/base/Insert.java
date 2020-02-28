@@ -18,6 +18,7 @@ public class Insert extends Committer {
   }
   @Override public void execute() { sieve.add(key, sieve.cook(committed)); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
+
   public static final String NAME = "insert";
   public static final String BRIEF = "";
   public static final String SYNTAX = NAME + " [key] {element}";
