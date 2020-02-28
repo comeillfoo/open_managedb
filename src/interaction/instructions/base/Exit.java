@@ -6,7 +6,7 @@ import interaction.instructions.Decree;
 public class Exit extends Decree {
   public Exit(Reciever reciever) {super(reciever);}
   @Override public void execute() {System.exit(0);} // TODO: check if it is bad decision;
-  public String ToString() {
+  public String toString() {
     return NAME + " : " + SYNTAX;
   }
   public static final String NAME = "exit";

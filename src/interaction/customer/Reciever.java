@@ -1,7 +1,6 @@
 package interaction.customer;
 
 import entity.Mappable;
-import entity.Organization;
 import interaction.instructions.extended.Indicator;
 import interaction.sender.Prompter;
 
