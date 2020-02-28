@@ -15,8 +15,8 @@ public class FilterContainsName extends FilterContains {
   }
   @Override public void execute() { sieve.survey(litmus); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
-  public static final String NAME = "filter_contains";
+  public static final String NAME = "filter_contains_name";
   public static final String BRIEF = "";
-  public static final String SYNTAX = NAME + "_name [name]";
+  public static final String SYNTAX = NAME + " [name]";
   public static final String DESCRIPTION = "";
 }
