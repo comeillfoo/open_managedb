@@ -1,6 +1,6 @@
 package interaction.sender;
 
-import exceptions.InvalidClassNameException;
+import java.util.Scanner;
 import interaction.instructions.Command;
 import interaction.instructions.base.*;
 import interaction.instructions.extended.*;
@@ -17,10 +17,6 @@ public abstract class Prompter implements Invoker {
   public Prompter(PrintStream pipeout) {
     pipe = pipeout;
     dictionary = new HashMap<>();
-  }
-
-  public Scanner getInterrogater() {
-    return this.interrogater;
   }
 
   @Override
