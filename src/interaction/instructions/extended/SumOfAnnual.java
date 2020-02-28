@@ -1,11 +1,11 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
 public class SumOfAnnual extends Decree {
-  protected SumOfAnnual(Reciever reciever) {
-    super(reciever);
+  protected SumOfAnnual(Receiver receiver) {
+    super(receiver);
   }
 
   @Override public void execute() {}

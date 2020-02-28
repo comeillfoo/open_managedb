@@ -1,11 +1,11 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 
 public class FilterContainsName extends FilterContains {
   private String name = "";
-  public FilterContainsName(Reciever reciever) {
-    super(reciever);
+  public FilterContainsName(Receiver receiver) {
+    super(receiver);
     litmus = (subject) -> (name.equals("")? true : name.equals(subject.getName()));
   }
   public void searchFor(String name) {

@@ -1,12 +1,12 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.sender.Prompter;
 
 public class Update extends Committer {
   private int id;
-  public Update(Reciever reciever) {
-    super(reciever);
+  public Update(Receiver receiver) {
+    super(receiver);
   }
   @Override public void execute() {sieve.add(sieve.search(id), sieve.cook(committed));}
   @Override public String toString() {return NAME + " : " + SYNTAX;}

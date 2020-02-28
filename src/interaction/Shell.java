@@ -1,7 +1,7 @@
 package interaction;
 
 import entity.Organization;
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.customer.TotalCommander;
 import interaction.instructions.extended.RemoveLower;
 import interaction.instructions.extended.ReplaceIfGreater;
@@ -12,7 +12,7 @@ import interaction.instructions.base.*;
 
 /**
  * Shell — это главный класс во всей программе,
- * он объединяет две главные сущности паттерна &lq;Command&rq;:
+ * он объединяет две главные сущности паттерна &laquo;Command&raquo;:
  * <ul>
  *  <li>{@link Invoker}: interface;</li>
  *  <li>{@link Receiver}: interface;</li>
@@ -29,7 +29,7 @@ import interaction.instructions.base.*;
  */
 public class Shell {
   private static final String environment = "DBPATH"; // title of environment variable
-  private static final Reciever<Integer, Organization> GeneralOperator = new TotalCommander(environment); // includes loading
+  private static final Receiver<Integer, Organization> GeneralOperator = new TotalCommander(environment); // includes loading
   private static final Invoker GeneralCaller = new ConsolePrompter(System.out, System.in);
   // starting actions
   static {

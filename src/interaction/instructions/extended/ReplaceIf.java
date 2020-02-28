@@ -1,11 +1,11 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.base.Committer;
 
 abstract class ReplaceIf extends Committer {
   protected Indicator litmus;
-  protected ReplaceIf(Reciever reciever) {
-    super(reciever);
+  protected ReplaceIf(Receiver receiver) {
+    super(receiver);
   }
 }

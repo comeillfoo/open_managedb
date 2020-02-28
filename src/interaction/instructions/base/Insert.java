@@ -1,12 +1,12 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.sender.Prompter;
 
 public class Insert extends Committer {
   private Integer key;
-  public Insert(Reciever reciever) {
-    super(reciever);
+  public Insert(Receiver receiver) {
+    super(receiver);
   }
   @Override protected boolean commit(Prompter.ParamsCollector element) {
     committed = element;

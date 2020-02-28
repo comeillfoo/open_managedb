@@ -1,11 +1,11 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
 public class ExecuteScript extends Decree {
-  protected ExecuteScript(Reciever reciever) {
-    super(reciever);
+  protected ExecuteScript(Receiver receiver) {
+    super(receiver);
   }
   @Override public void execute() {
 

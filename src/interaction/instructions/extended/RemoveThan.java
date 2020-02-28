@@ -1,11 +1,11 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.sender.Prompter;
 
 abstract class RemoveThan extends ReplaceIf {
-  protected RemoveThan(Reciever reciever) {
-    super(reciever);
+  protected RemoveThan(Receiver receiver) {
+    super(receiver);
   }
 
   @Override

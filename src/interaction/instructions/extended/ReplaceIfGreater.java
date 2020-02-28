@@ -1,14 +1,14 @@
 package interaction.instructions.extended;
 
 import entity.Organization;
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.extended.comparators.OrganizationComparator;
 import interaction.sender.Prompter;
 
 public class ReplaceIfGreater extends ReplaceIf {
   private Integer key;
-  public ReplaceIfGreater(Reciever reciever) {
-    super(reciever);
+  public ReplaceIfGreater(Receiver receiver) {
+    super(receiver);
     litmus = (subject) -> (new OrganizationComparator().compare((Organization) sieve.cook(committed), (Organization) subject) == 1);
   }
   public void openKey(Integer key) {
