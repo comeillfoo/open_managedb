@@ -17,7 +17,7 @@ import java.io.PrintStream;
 public interface Invoker {
   /**
    * Метод signup отвечает за добавление комманд в словарь комманд
-   * @param String command_name, Command instruct
+   * @param command_name, Command instruct
    * @return void
    * @see Command
    */
@@ -25,9 +25,6 @@ public interface Invoker {
   /**
    * Метод scan просит у пользователя ввод и анализирует: какая команда требуется.
    * Возвращаемый тип показывает нужен ли дальнейший ввод.
-   * @param no parameters
-   *
-   *
    * @return boolean is input ended
    */
   boolean scan();

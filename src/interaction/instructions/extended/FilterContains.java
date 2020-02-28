@@ -1,11 +1,11 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
 abstract class FilterContains extends Decree {
   protected Indicator litmus;
-  protected FilterContains(Reciever reciever) {
-    super(reciever);
+  protected FilterContains(Receiver receiver) {
+    super(receiver);
   }
 }

@@ -1,13 +1,13 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.extended.*;
 import java.io.PrintStream;
 
 public class Help extends Recorder {
   private final String[] pages = new String[17];
 
-  public Help(Reciever reciever, PrintStream printer) {super(reciever, printer);}
+  public Help(Receiver receiver, PrintStream printer) {super(receiver, printer);}
 
   @Override public void execute() {sieve.man(pages, printer);}
   private String makepage(String command_name, String brief, String syntax, String description) {

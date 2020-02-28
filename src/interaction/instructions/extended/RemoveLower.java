@@ -1,12 +1,12 @@
 package interaction.instructions.extended;
 
 import entity.Organization;
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.extended.comparators.OrganizationComparator;
 
 public class RemoveLower extends RemoveThan {
-  public RemoveLower(Reciever reciever) {
-    super(reciever);
+  public RemoveLower(Receiver receiver) {
+    super(receiver);
     litmus = (subject) -> (new OrganizationComparator().compare((Organization) sieve.cook(committed), (Organization) subject) == -1);
   }
   @Override

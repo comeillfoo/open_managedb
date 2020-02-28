@@ -1,10 +1,10 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 
 public class MaxByDate extends MaxBy  {
-  public MaxByDate(Reciever reciever) {
-    super(reciever);
+  public MaxByDate(Receiver receiver) {
+    super(receiver);
   }
 
   @Override

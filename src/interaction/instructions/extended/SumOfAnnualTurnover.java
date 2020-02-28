@@ -1,12 +1,12 @@
 package interaction.instructions.extended;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 
 import java.io.PrintStream;
 
 public class SumOfAnnualTurnover extends SumOfAnnual {
-  public SumOfAnnualTurnover(Reciever reciever, PrintStream printer) {
-    super(reciever, printer);
+  public SumOfAnnualTurnover(Receiver receiver, PrintStream printer) {
+    super(receiver, printer);
   }
   @Override
   public void execute() {

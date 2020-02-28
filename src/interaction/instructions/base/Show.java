@@ -1,12 +1,12 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 
 import java.io.PrintStream;
 
 public class Show extends Recorder {
-  public Show(Reciever reciever, PrintStream printer) {
-    super(reciever, printer);
+  public Show(Receiver receiver, PrintStream printer) {
+    super(receiver, printer);
   }
   @Override public void execute() { printer.println(sieve.survey((subject)->(true))); }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
