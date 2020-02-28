@@ -1,13 +1,13 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.sender.Prompter;
 
 public class Add extends Committer {
   @Override public void execute() {
     sieve.add(sieve.cook(committed));
   }
-  public Add(Reciever reciever) {super(reciever);}
+  public Add(Receiver receiver) {super(receiver);}
   @Override public boolean commit(Prompter.ParamsCollector element) {
     committed = element;
     return true;

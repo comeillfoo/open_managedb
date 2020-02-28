@@ -1,10 +1,10 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import java.io.PrintStream;
 
 public class Info extends Recorder {
-  public Info(Reciever reciever, PrintStream printer) {super(reciever, printer);}
+  public Info(Receiver receiver, PrintStream printer) {super(receiver, printer);}
 
   @Override public void execute() { printer.println(sieve.review()); }
   @Override public String toString() {

@@ -1,32 +1,25 @@
 package interaction.instructions.extended;
 
-import entity.Organization;
 import interaction.customer.Receiver;
-import interaction.instructions.extended.comparators.OrganizationComparator;
-import interaction.sender.Prompter;
 
-public class ReplaceIfGreater extends ReplaceIf {
-  private Integer key;
-  public ReplaceIfGreater(Receiver receiver) {
-    super(receiver);
-    litmus = (subject) -> (new OrganizationComparator().compare((Organization) sieve.cook(committed), (Organization) subject) == 1);
-  }
-  public void openKey(Integer key) {
-    if (key != null)
-      this.key = key;
-    else key = -1;
+import java.io.PrintStream;
+
+public class SumOfAnnualTurnover extends SumOfAnnual {
+  public SumOfAnnualTurnover(Receiver receiver, PrintStream printer) {
+    super(receiver, printer);
   }
   @Override
-  protected boolean commit(Prompter.ParamsCollector element) {
-    if (element != null) {
-      committed = element;
-      return true;
+  public void execute() {
+    String list = sieve.survey((subject)->(true));
+    String[] lines = list.split("\n");
+    float sum = 0;
+    for (String line : lines) {
+      String annualTurnover = line.split("annualTurnover: (.*)?;")[0];
+      sum += Float.valueOf(annualTurnover);
     }
-    return false;
+    printer.println(sum);
   }
-  @Override
-  public void execute() { sieve.add(key, sieve.cook(committed), litmus); }
-  public static final String NAME = "replace_if_greater";
+  public static final String NAME = "sum_of_annual_turnover";
   public static final String BRIEF = "заменяет на новое значение по ключу [key], если оно больше старого";
   public static final String SYNTAX = NAME + " [key] {element}";
   public static final String DESCRIPTION = "Аргумент в квадратных скобках указывается в той же строке, что\n\t" +

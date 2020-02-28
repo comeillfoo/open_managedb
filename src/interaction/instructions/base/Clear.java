@@ -1,10 +1,10 @@
 package interaction.instructions.base;
 
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
 public class Clear extends Decree {
-  public Clear(Reciever reciever) {super(reciever);}
+  public Clear(Receiver receiver) {super(receiver);}
   @Override public void execute() {sieve.clear();}
   @Override public String toString() {
     return NAME + " : " + SYNTAX;

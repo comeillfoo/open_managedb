@@ -1,6 +1,5 @@
 package interaction.sender;
 
-import exceptions.InvalidClassNameException;
 import interaction.instructions.Command;
 import interaction.instructions.base.*;
 import interaction.instructions.extended.*;

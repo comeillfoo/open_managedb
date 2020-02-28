@@ -1,14 +1,13 @@
 package interaction.customer;
 
 import entity.Mappable;
-import entity.Organization;
 import interaction.instructions.extended.Indicator;
 import interaction.sender.Prompter;
 
 import java.io.PrintStream;
 import java.util.List;
 
-public interface Reciever<K, V extends Mappable<K>> {
+public interface Receiver<K, V extends Mappable<K>> {
   void add(V element);
   void add(K key, V element);
   void add(K key, V element, Indicator sign);

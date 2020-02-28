@@ -1,14 +1,13 @@
 package interaction.instructions;
 
-import entity.Organization;
-import interaction.customer.Reciever;
+import interaction.customer.Receiver;
 
 public abstract class Decree implements Command {
-  protected final Reciever sieve;
+  protected final Receiver sieve;
   @Override public String toString() {
     return NAME + " : " + SYNTAX;
   }
-  protected Decree(Reciever reciever) {sieve = reciever;}
+  protected Decree(Receiver receiver) {sieve = receiver;}
   protected static final String NAME = null;
   protected static final String BRIEF = null;
   protected static final String SYNTAX = null;
