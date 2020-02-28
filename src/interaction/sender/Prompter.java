@@ -18,7 +18,14 @@ public abstract class Prompter implements Invoker {
     pipe = pipeout;
     dictionary = new HashMap<>();
   }
-  @Override public void signup(String command_name, Command instruct) {
+
+  public Scanner getInterrogater() {
+    return this.interrogater;
+  }
+
+  @Override
+  public void signup(String command_name, Command instruct) {
+
     dictionary.put(command_name, instruct);
   }
   protected void invoke(String command_name) {

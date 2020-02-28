@@ -40,6 +40,7 @@ public class Help extends Recorder {
     pages[15] = makepage(SumOfAnnual.NAME, SumOfAnnual.BRIEF, SumOfAnnual.SYNTAX, SumOfAnnual.DESCRIPTION);
     pages[16] = makepage(ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX, ExecuteScript.DESCRIPTION);
   }
+
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "help";
   public static final String BRIEF = "выводит справку по доступным командам";
