@@ -1,5 +1,4 @@
 package interaction.instructions.extended;
-
 import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
