@@ -9,7 +9,8 @@ public final class FilePrompter extends Prompter {
   private final InputStreamReader reader;
   public FilePrompter(PrintStream pipeout, InputStream pipein) {
     super(pipeout);
-    reader = new InputStreamReader(pipein);
+    recited = pipein;
+    reader = new InputStreamReader(recited);
   }
   // TODO: apply a NULL-safety code and reading from file
   private String readline() throws IOException {

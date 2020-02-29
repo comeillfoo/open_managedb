@@ -2,19 +2,20 @@ package interaction.sender;
 
 import entity.OrganizationType;
 import exceptions.InvalidClassNameException;
-import interaction.instructions.base.*;
 import interaction.instructions.extended.ExecuteScript;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 
 public final class ConsolePrompter extends Prompter {
-  protected final Scanner interrogater;
+  private final Scanner interrogater;
   public ConsolePrompter(PrintStream pipeout, InputStream pipein) {
     super(pipeout);
-    interrogater = new Scanner(pipein);
+    recited = pipein;
+    interrogater = new Scanner(recited);
     interrogater.useLocale(Locale.UK);
   }
   // TODO: apply a NULL-safety code
@@ -30,11 +31,11 @@ public final class ConsolePrompter extends Prompter {
     String fullname = interrogater.nextLine();
     pipe.print("Enter an integer Organization.employeesCount: ");
     int employeesCount = interrogater.nextInt();
+    interrogater.nextLine();
     pipe.println("Elect OrganizationType.type: ");
     for (OrganizationType orgtype : OrganizationType.values()) {
       pipe.println("\t+ " + orgtype);
     }
-    interrogater.nextLine();
     String enumName = interrogater.nextLine(); // TODO: possibly absence of enumeration constant
     pipe.println("Entering Organization.officialAddress as Address:");
     ParamsCollector officialAddress = getAddress();
@@ -47,8 +48,10 @@ public final class ConsolePrompter extends Prompter {
   @Override protected ParamsCollector getCoordinates() {
     pipe.print("Enter an integer Coordinates.x: ");
     int x = interrogater.nextInt();
+    interrogater.nextLine();
     pipe.print("Enter a float Coordinates.y: ");
     Float y = (float) interrogater.nextDouble();
+    interrogater.nextLine();
     return new ParamsCollector(null, new long[]{(long) x}, new double[]{(double) y}, null);
   }
   @Override protected ParamsCollector getAddress() {
@@ -61,10 +64,13 @@ public final class ConsolePrompter extends Prompter {
   @Override protected ParamsCollector getLocation() {
     pipe.print("Enter a long integer Location.x: ");
     long x = interrogater.nextLong();
+    interrogater.nextLine();
     pipe.print("Enter a long integer Location.y: ");
     long y = interrogater.nextLong();
+    interrogater.nextLine();
     pipe.print("Enter a double fraction Location.z: ");
     double z = interrogater.nextDouble();
+    interrogater.nextLine();
     return new ParamsCollector(null, new long[]{x, y}, new double[]{z},null);
   }
   @Override public boolean scan() {

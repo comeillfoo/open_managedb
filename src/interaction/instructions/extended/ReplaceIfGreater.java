@@ -17,7 +17,7 @@ public class ReplaceIfGreater extends ReplaceIf {
     else key = -1;
   }
   @Override
-  protected boolean commit(Prompter.ParamsCollector element) {
+  public boolean commit(Prompter.ParamsCollector element) {
     if (element != null) {
       committed = element;
       return true;
