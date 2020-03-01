@@ -5,7 +5,7 @@ import java.io.PrintStream;
 
 public class Info extends Recorder {
   public Info(Receiver receiver, PrintStream printer) {super(receiver, printer);}
-  @Override public void execute() { printer.println(sieve.review()); 
+  @Override public void execute() { printer.println(sieve.review()); }
   @Override public String toString() {
     return NAME + " : " + SYNTAX;
   }

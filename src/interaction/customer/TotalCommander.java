@@ -27,17 +27,7 @@ import java.util.Map;
 
 public class TotalCommander extends Commander<Integer, Organization> {
 
-  private ConsolePrompter.ParamsCollector paramsCollector;
-  private ConsolePrompter consolePrompter;
-
   public TotalCommander(String envVar) {super(envVar);}
-  public void setParamsCollection(ConsolePrompter.ParamsCollector paramsCollector){
-    this.paramsCollector = paramsCollector;
-  }
-  public void setConsolePrompter(ConsolePrompter consolePrompter){
-    this.consolePrompter = consolePrompter;
-  }
-
   // base methods
   @Override public void add(Organization element) { elements.put(element.getKey(), element);}
   @Override public void add(Integer key, Organization element) {elements.put(key, element);}
@@ -45,9 +35,6 @@ public class TotalCommander extends Commander<Integer, Organization> {
     if (sign.detect(lookFor(key)))
       add(key, element);
   }
-  @Override public void add(Organization element) { elements.put(element.getKey(), element);} //Script elements adding
-  @Override public void add(Integer key, Organization element) {elements.put(key, element);} //Interactive elements adding
-
   @Override public List<Organization> load() {
     Organizations companies = null; // TODO: eliminate "maybe null" remaining
     try(InputStream streamin = new FileInputStream(System.getProperty("user.dir") + "/" + System.getenv(envVar));
@@ -124,73 +111,5 @@ public class TotalCommander extends Commander<Integer, Organization> {
       if (litmus.detect(enter.getValue()))
         blank.append("key: " + enter.getKey() + "; value: " + enter.getValue() + "\n");
     return blank.toString();
-  }
-
-  @Override
-  public void removeKey() throws NullPointerException{
-    consolePrompter.getMainStream().println("Enter a key:");
-    Integer key = consolePrompter.getInterrogater().nextInt();
-    if (elements.containsKey(key)){
-      elements.remove(key);
-    }else{
-      System.err.println("There is no such key:\""+key+"\" has been found!");
-    }
-
-  }
-
-  @Override
-  public void save() {
-      unload();
-  }
-
-  @Override
-  public void show() {
-    for (Map.Entry<Integer, Organization> entry : elements.entrySet()){
-        consolePrompter.getMainStream().println("Id:"+entry.getKey()+" Value:"+entry.getValue());
-        consolePrompter.getMainStream().println();
-        entry.getValue().toString();
-        consolePrompter.getMainStream().println();
-    }
-  }
-
-  @Override
-  public void update(Organization element) {
-    consolePrompter.getMainStream().println("Enter a key:");
-    elements.replace(consolePrompter.getInterrogater().nextInt(),element);
-  }
-
-  @Override
-  public void maxByCreationDate() {
-    Organization  earliestOrganization = null;
-    for(Map.Entry<Integer, Organization> entry : elements.entrySet()){
-      if(earliestOrganization == null){
-        earliestOrganization = elements.get(entry.getKey());
-        continue;
-      }
-      if(earliestOrganization.getCreationDate().isAfter(elements.get(entry.getKey()).getCreationDate())){
-        earliestOrganization = elements.get(entry.getKey());
-      }
-    }
-    consolePrompter.getMainStream().println(earliestOrganization.toString());
-  }
-
-  @Override
-  public void filterContaines() {
-    consolePrompter.getMainStream().println("Enter the \"name\":");
-    String tempName = consolePrompter.getInterrogater().nextLine().toLowerCase();
-    for (Map.Entry<Integer, Organization> entry : elements.entrySet()){
-      if(entry.getValue().getName().toLowerCase().contains(tempName)){
-        consolePrompter.getMainStream().println(entry.getValue().toString());
-      }
-    }
-  }
-
-  @Override
-  public void sumOfAnnual() {
-    float annualSum = 0;
-    for (Map.Entry<Integer, Organization> entry : elements.entrySet()){
-        annualSum += entry.getValue().getAnnualTurnover();
-    }
-    consolePrompter.getMainStream().println(annualSum);
   }
 }

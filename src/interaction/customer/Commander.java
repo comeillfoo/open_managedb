@@ -16,15 +16,10 @@ abstract class Commander<K, V extends Mappable<K>> implements Receiver<K, V> {
 
   @Override public String review() {
     Class studyee = elements.getClass();
-    StringBuilder info = new StringBuilder("\t> Collection canonical name: " + studyee.getCanonicalName() + ";\n");
-    info.append("\t > Collection type name: " + studyee.getTypeName() + ";\n");
-    info.append("\t > Collection just name: " + studyee.getName() + ";\n");
-    info.append("\t > Collection in generic view: " + studyee.toGenericString() + ";\n");
-    info.append("\n\t > As string:\n\t" + studyee + "\n\n");
-    studyee = null; // TODO: is it possible memory performance?
-    info.append("\t > Is collection empty?: " + elements.isEmpty() + ";\n");
-    info.append("\t > Collection size: " + elements.size() + ";\n");
-    info.append("\n\t > As string:\n\t" + elements + "\n\n");
+    StringBuilder info = new StringBuilder("\t* Collection canonical name: " + studyee.getCanonicalName() + ";\n");
+    info.append("\t* Collection type name: " + studyee.getTypeName() + ";\n");
+    info.append("\t* Is collection empty?: " + elements.isEmpty() + ";\n");
+    info.append("\t* Collection size: " + elements.size() + ";\n");
     return info.toString();
   }
 }

@@ -25,16 +25,12 @@ public abstract class Prompter implements Invoker {
     node = upnode;
   }
 
-  public Scanner getInterrogater() {
-    return this.interrogater;
-  }
-
   @Override
   public void signup(String command_name, Command instruct) {
 
     dictionary.put(command_name, instruct);
   }
-  protected void invoke(String command_name) {
+  protected boolean invoke(String command_name) {
     switch (command_name) {
       case Help.NAME:
       case Info.NAME:
@@ -43,36 +39,40 @@ public abstract class Prompter implements Invoker {
       case Save.NAME:
       case Exit.NAME:
       case SumOfAnnualTurnover.NAME:
-      case MaxByDate.NAME: dictionary.get(command_name).execute(); break;
+      case MaxByDate.NAME: dictionary.get(command_name).execute(); return true;
       case RemoveLower.NAME: {
-        ParamsCollector element = getOrganization();
+        ParamsCollector element = null;
+        while (element == null) element = getOrganization();
         dictionary.get(command_name).execute();}
-        break;
+      return true;
       default: pipe.println("There is no such command yet...");
+      return false;
     }
   }
-  protected void invoke(String command_name, String argument) {
+  protected boolean invoke(String command_name, String argument) throws NumberFormatException {
     switch (command_name) {
       case Insert.NAME: {
         Integer key = Integer.valueOf(argument);
-        ParamsCollector element = getOrganization();
+        ParamsCollector element = null;
+        while (element == null) element = getOrganization();
         Insert command = (Insert) dictionary.get(command_name);
         command.commit(key, element);
         command.execute();}
-      break;
+      return true;
       case Update.NAME:{
         int id = Integer.valueOf(argument);
-        ParamsCollector element = getOrganization();
+        ParamsCollector element = null;
+        while (element == null) element = getOrganization();
         Update command = (Update) dictionary.get(command_name);
         command.commit(id, element);
         command.execute();}
-      break;
+      return true;
       case RemoveKey.NAME:{
         Integer key = Integer.valueOf(argument);
         RemoveKey command = (RemoveKey) dictionary.get(command_name);
         command.openKey(key);
         command.execute();}
-      break;
+      return true;
       case ExecuteScript.NAME:{
         FilePrompter filePrompter = null;
         try(FileInputStream input = new FileInputStream(argument)) {
@@ -92,29 +92,31 @@ public abstract class Prompter implements Invoker {
         } catch (RecursionFoundException e) {
         }
       }
-      break;
+      return true;
       case ReplaceIfLower.NAME: {
         Integer key = Integer.valueOf(argument);
-        ParamsCollector element = getOrganization();
+        ParamsCollector element = null;
+        while (element == null) element = getOrganization();
         ReplaceIfLower command = (ReplaceIfLower) dictionary.get(command_name);
         command.openKey(key);
         command.commit(element);
         command.execute();}
-        break;
+      return true;
       case ReplaceIfGreater.NAME: {
         Integer key = Integer.valueOf(argument);
-        ParamsCollector element = getOrganization();
+        ParamsCollector element = null;
+        while (element == null) element = getOrganization();
         ReplaceIfGreater command = (ReplaceIfGreater) dictionary.get(command_name);
         command.openKey(key);
         command.commit(element);}
-        break;
+      return true;
       case FilterContainsName.NAME: {
         FilterContainsName command = (FilterContainsName) dictionary.get(command_name);
         command.searchFor(argument);
         command.execute();}
-        break;
+      return true;
       default: pipe.println("There is no command with such number of arguments...");
-        break;
+      return false;
     }
   }
   @Override public PrintStream getMainStream() {return pipe;}
