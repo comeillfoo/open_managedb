@@ -51,6 +51,12 @@ public class Shell {
     GeneralCaller.signup(SumOfAnnualTurnover.NAME, new SumOfAnnualTurnover(GeneralOperator, GeneralCaller.getMainStream()));
     GeneralCaller.signup(FilterContainsName.NAME, new FilterContainsName(GeneralOperator));
   }
+
+  /**
+   * Обычный метод main, который и вызывает всю эту <cite>гавнину</cite> из пакетных глубин, так сказать
+   * <em>виновник</em> сего торжества.
+   * @param args аргументы командной строки
+   */
   public static void main(String[] args) {
     while (true) {
       while (GeneralCaller.scan());
