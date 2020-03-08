@@ -25,16 +25,45 @@ import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
 import java.util.Map;
 
+/**
+ *
+ */
 public class TotalCommander extends Commander<Integer, Organization> {
-
+  /**
+   *
+   * @param envVar
+   */
   public TotalCommander(String envVar) {super(envVar);}
   // base methods
+
+  /**
+   *
+   * @param element
+   */
   @Override public void add(Organization element) { elements.put(element.getKey(), element);}
+
+  /**
+   *
+   * @param key ключ, по которому добавляется элемент
+   * @param element сам добавляемый элемент
+   */
   @Override public void add(Integer key, Organization element) {elements.put(key, element);}
+
+  /**
+   *
+   * @param key ключ, по которому добавляется элемент
+   * @param element добавляемый элемент
+   * @param sign условие, по которому элемент должен добавится в коллекцию
+   */
   public void add(Integer key, Organization element, Indicator sign) {
     if (sign.detect(lookFor(key)))
       add(key, element);
   }
+
+  /**
+   *
+   * @return
+   */
   @Override public List<Organization> load() {
     Organizations companies = null; // TODO: eliminate "maybe null" remaining
     try(InputStream streamin = new FileInputStream(System.getProperty("user.dir") + "/" + System.getenv(envVar));
@@ -58,6 +87,9 @@ public class TotalCommander extends Commander<Integer, Organization> {
     return companies.getCompanies();
   }
 
+  /**
+   *
+   */
   @Override public void unload() {
     try(OutputStream streamout = new FileOutputStream(System.getenv(envVar));
         OutputStreamWriter writer = new OutputStreamWriter(streamout);
@@ -77,18 +109,37 @@ public class TotalCommander extends Commander<Integer, Organization> {
     }
   }
 
+  /**
+   *
+   */
   @Override public void clear() {elements.clear();}
+
+  /**
+   *
+   * @param pages массив описания комманд (каждый элемент - одна команда)
+   * @param writer
+   */
   @Override
   public void man(String[] pages, PrintStream writer) {
     for (String p : pages)
       writer.println(p);
   }
   // There is a facility magic
+  /**
+   *
+   * @param committed объект, хранящий параметры о собранном элементе
+   * @return
+   */
   @Override
   public Organization cook(Prompter.ParamsCollector committed) {
     return new OrganizationBuilder().make(committed);
   }
 
+  /**
+   *
+   * @param id идентификатор элемента
+   * @return
+   */
   @Override
   public Integer search(Integer id) {
     for (Map.Entry<Integer, Organization> enter : elements.entrySet())
@@ -96,14 +147,31 @@ public class TotalCommander extends Commander<Integer, Organization> {
         return enter.getKey();
     return null;
   }
+
+  /**
+   *
+   * @param key ключ, по которому производится поиск
+   * @return
+   */
   @Override
   public Organization lookFor(Integer key) {
     return elements.get(key);
   }
+
+  /**
+   *
+   * @param key ключ элемента
+   */
   @Override
   public void remove(Integer key) {
     elements.remove(key);
   }
+
+  /**
+   *
+   * @param litmus условие, по которому ищется элемент
+   * @return
+   */
   @Override
   public String survey(Indicator litmus) {
     StringBuilder blank = new StringBuilder("");

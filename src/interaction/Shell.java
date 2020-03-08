@@ -23,7 +23,11 @@ import interaction.instructions.base.*;
  * </p>
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
- * @see Invoker, Receiver, Prompter, Commander, TotalCommander, ConsolePrompter...
+ * @see Invoker
+ * @see Receiver
+ * @see interaction.sender.Prompter
+ * @see TotalCommander
+ * @see ConsolePrompter
  */
 public class Shell {
   private static final String environment = "DBPATH"; // title of environment variable
