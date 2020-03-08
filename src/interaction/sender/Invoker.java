@@ -12,13 +12,16 @@ import java.io.PrintStream;
  * </p>
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
- * @see Prompter, ConsolePrompter, FilePrompter, Receiver, Commander, TotalCommander
+ * @see Prompter
+ * @see ConsolePrompter
+ * @see FilePrompter
+ * @see interaction.customer.Receiver
+ * @see interaction.customer.TotalCommander
  */
 public interface Invoker {
   /**
    * Метод signup отвечает за добавление комманд в словарь комманд
    * @param command_name, Command instruct
-   * @return void
    * @see Command
    */
   void signup(String command_name, Command instruct);
