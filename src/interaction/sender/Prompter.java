@@ -33,20 +33,19 @@ public abstract class Prompter implements Invoker {
   protected final Map<String, Command> dictionary;
 
   /**
-   *
-   * @param pipeout
+   * Стандартный конструктор класса, выставляющий все поля по умолчанию
+   * Для основного Invoker'а
+   * @param pipeout поток вывода для общения с пользователем
    */
   protected Prompter(PrintStream pipeout) {
     pipe = pipeout;
     dictionary = new HashMap<>();
-    recited = null;
-    node = null;
   }
 
   /**
-   *
-   * @param pipeout
-   * @param upnode
+   * Дополнительный конструктор для Invoker'ов вызываемых из других Invoker'ов.
+   * @param pipeout поток вывода для общения с пользователем
+   * @param upnode ссылка на предыдущий Invoker, из которого произошел вызов
    */
   protected Prompter(PrintStream pipeout, Prompter upnode) {
     this(pipeout);
@@ -54,9 +53,9 @@ public abstract class Prompter implements Invoker {
   }
 
   /**
-   *
-   * @param command_name, Command instruct
-   * @param instruct
+   * Метод, добавляющий команду в соответсвующий список под определённым названием
+   * @param command_name String строковое имя команды
+   * @param instruct Command объект команды
    */
   @Override
   public void signup(String command_name, Command instruct) {
@@ -64,9 +63,10 @@ public abstract class Prompter implements Invoker {
   }
 
   /**
-   *
-   * @param command_name
-   * @return
+   * Вызов команды по ее названию, вызывает только команды
+   * <strong>не требующие аргументов</strong>
+   * @param command_name String название команды
+   * @return boolean признак успеха <strong>вызова</strong> команды
    */
   protected boolean invoke(String command_name) {
     switch (command_name) {

@@ -55,7 +55,7 @@ public class Shell {
   /**
    * Обычный метод main, который и вызывает всю эту <cite>гавнину</cite> из пакетных глубин, так сказать
    * <em>виновник</em> сего торжества.
-   * @param args аргументы командной строки
+   * @param args просто аргументы командной строки
    */
   public static void main(String[] args) {
     while (true) {
