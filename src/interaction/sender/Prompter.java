@@ -89,11 +89,12 @@ public abstract class Prompter implements Invoker {
   }
 
   /**
-   *
-   * @param command_name
-   * @param argument
-   * @return
-   * @throws NumberFormatException
+   * Вызов команды по ее названию и
+   * <strong>с соответсвующим аргументом</strong>
+   * @param command_name название команды
+   * @param argument агрумент команды
+   * @return признак успешности вызова команды
+   * @throws NumberFormatException исключение выкидываемое при ошибке привидения к числу
    */
   protected boolean invoke(String command_name, String argument) throws NumberFormatException {
     switch (command_name) {
@@ -167,24 +168,72 @@ public abstract class Prompter implements Invoker {
   }
 
   /**
-   *
-   * @return
+   * Геттер, выкидывающий ссылку на поток вывода
+   * @return ссылка на поток вывода, с помощью которога уведомляется пользователь
    */
   @Override public PrintStream getMainStream() {return pipe;}
+
+  /**
+   * Внутренний класс, инкапсулирующий параметры собираемых объектов, между
+   * элементами паттерна.
+   * <center><strong>DISCLAIMER</strong></center>
+   * <hr>
+   * <p><b>
+   *   <em>Внимание!</em> Данное архитектурное решение было принято единолично, в спешке и цейтноте,
+   *   возможно, его автор в это время находился в состоянии алкогольного или наркотического опьянения;
+   *   также возможно, что этот "субъект", зовущий себя программистом, либо герой романа Достоевского - "Идиот", либо
+   *   законченный лентяй (в последнем даже можно не сомневаться), так как не выделил данное, стыдно говорит, <em>творение</em> в отдельный класс.
+   *   И потому такое решение не то что не претендует на звание лучшего, более того, автор этого 8-го чуда света готов лично
+   *   забрать все награды на "World Stipidity Award", а также каждый раз, открывая эту лагучую IDE и набирая поток говна, называющийся кодом,
+   *   надевать колпак с надписью "DUNCE".
+   * </b></p>
+   * <span>Именно по этим вышеупомянутым причинам у этого класса стоит модификатор <i>final</i></span>
+   * @author Come_1LL_F00 aka Lenar Khannanov
+   * @see interaction.customer.TotalCommander
+   * @see Invoker
+   */
   public final class ParamsCollector {
     private final ParamsCollector[] internals;
     private final long[] integers;
     private final double[] fractions;
     private final String[] lines;
+
+    /**
+     *
+     * @param internals
+     * @param integers
+     * @param fractions
+     * @param lines
+     */
     ParamsCollector(ParamsCollector[] internals, long[] integers, double[] fractions, String[] lines) {
       this.internals = internals;
       this.integers = integers;
       this.fractions = fractions;
       this.lines = lines;
     }
+
+    /**
+     *
+     * @return
+     */
     public ParamsCollector[] getInternals() { return internals; }
+
+    /**
+     *
+     * @return
+     */
     public long[] getIntegers() { return integers; }
+
+    /**
+     *
+     * @return
+     */
     public double[] getFractions() { return fractions; }
+
+    /**
+     *
+     * @return
+     */
     public String[] getLines() { return lines; }
   }
   //TODO: check if some errors cast
