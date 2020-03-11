@@ -33,11 +33,11 @@ public class Help extends Recorder {
     pages[8] = makepage(Show.NAME, Show.BRIEF, Show.SYNTAX, Show.DESCRIPTION);
     pages[9] = makepage(Update.NAME, Update.BRIEF, Update.SYNTAX, Update.DESCRIPTION);
     pages[10] = makepage(FilterContainsName.NAME, FilterContainsName.BRIEF, FilterContainsName.SYNTAX, FilterContainsName.DESCRIPTION);
-    //pages[11] = makepage(MaxByDate.NAME, MaxByDate.BRIEF, MaxByDate.SYNTAX, MaxByDate.DESCRIPTION);
+    pages[11] = makepage(MaxByDate.NAME, MaxByDate.BRIEF, MaxByDate.SYNTAX, MaxByDate.DESCRIPTION);
     pages[12] = makepage(RemoveLower.NAME, RemoveLower.BRIEF, RemoveLower.SYNTAX, RemoveLower.DESCRIPTION);
     pages[13] = makepage(ReplaceIfLower.NAME, ReplaceIfLower.BRIEF, ReplaceIfLower.SYNTAX, ReplaceIfLower.DESCRIPTION);
     pages[14] = makepage(ReplaceIfGreater.NAME, ReplaceIfGreater.BRIEF, ReplaceIfGreater.SYNTAX, ReplaceIfGreater.DESCRIPTION);
-    pages[15] = makepage(SumOfAnnual.NAME, SumOfAnnual.BRIEF, SumOfAnnual.SYNTAX, SumOfAnnual.DESCRIPTION);
+    pages[15] = makepage(SumOfAnnualTurnover.NAME, SumOfAnnualTurnover.BRIEF, SumOfAnnualTurnover.SYNTAX, SumOfAnnualTurnover.DESCRIPTION);
     pages[16] = makepage(ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX, ExecuteScript.DESCRIPTION);
   }
 

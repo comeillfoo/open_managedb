@@ -19,7 +19,6 @@ public interface Invoker {
    * Метод signup отвечает за добавление комманд в словарь комманд
    * @param command_name
    * @param instruct
-   * @return void
    * @see Command
    */
   void signup(String command_name, Command instruct);

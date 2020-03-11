@@ -11,9 +11,10 @@ public class Update extends Committer {
   @Override public void execute() {sieve.add(sieve.search(id), sieve.cook(committed));}
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "update";
-  public static final String BRIEF = "Обновляет элемент коллекции с указанным id.";
+  public static final String BRIEF = "Обновляет элемент коллекции.";
   public static final String SYNTAX = NAME + " id {element}";
-  public static final String DESCRIPTION = "Обновляет элемент с указанным id новым,составленным пользователем.";
+  public static final String DESCRIPTION = "Заменяет объект коллекции,соответствующий указанному пользователем id, обновленной версией." +
+                                        "\nПосле указания id пользователю предлагается ввести параметры, для формирования замены.";
   @Override
   protected boolean commit(Prompter.ParamsCollector element) {
     committed = element;

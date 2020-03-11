@@ -27,4 +27,9 @@ public class ReplaceIfLower extends ReplaceIf {
   @Override
   public void execute() { sieve.add(key, sieve.cook(committed), litmus); }
   public static final String NAME = "replace_if_lower";
+  public static final String BRIEF = "заменяет на новое значение по ключу [key], если оно меньше старого";
+  public static final String SYNTAX = NAME + " [key] {element}";
+  public static final String DESCRIPTION = "Аргумент в квадратных скобках указывается в той же строке, что\n\t" +
+      "и название команды, в то время как все параметры экземпляра {element} указываются по очереди\n\t" +
+      "в интерактивном режиме с новой строки.";
 }

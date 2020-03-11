@@ -3,9 +3,7 @@ package interaction;
 import entity.Organization;
 import interaction.customer.Receiver;
 import interaction.customer.TotalCommander;
-import interaction.instructions.extended.RemoveLower;
-import interaction.instructions.extended.ReplaceIfGreater;
-import interaction.instructions.extended.ReplaceIfLower;
+import interaction.instructions.extended.*;
 import interaction.sender.Invoker;
 import interaction.sender.ConsolePrompter;
 import interaction.instructions.base.*;
@@ -43,10 +41,12 @@ public class Shell {
     GeneralCaller.signup(Save.NAME, new Save(GeneralOperator));
     GeneralCaller.signup(Show.NAME, new Show(GeneralOperator, GeneralCaller.getMainStream()));
     GeneralCaller.signup(Update.NAME, new Update(GeneralOperator));
-    // TODO: sign up extended instructions...
     GeneralCaller.signup(ReplaceIfGreater.NAME, new ReplaceIfGreater(GeneralOperator));
     GeneralCaller.signup(ReplaceIfLower.NAME, new ReplaceIfLower(GeneralOperator));
     GeneralCaller.signup(RemoveLower.NAME, new RemoveLower(GeneralOperator));
+    GeneralCaller.signup(MaxByDate.NAME, new MaxByDate(GeneralOperator));
+    GeneralCaller.signup(SumOfAnnualTurnover.NAME, new SumOfAnnualTurnover(GeneralOperator, GeneralCaller.getMainStream()));
+    GeneralCaller.signup(FilterContainsName.NAME, new FilterContainsName(GeneralOperator));
   }
   public static void main(String[] args) {
     while (true) {
