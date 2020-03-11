@@ -17,8 +17,8 @@ import java.io.PrintStream;
 public interface Invoker {
   /**
    * Метод signup отвечает за добавление комманд в словарь комманд
-   * @param command_name, Command instruct
-   * @return void
+   * @param command_name
+   * @param instruct
    * @see Command
    */
   void signup(String command_name, Command instruct);

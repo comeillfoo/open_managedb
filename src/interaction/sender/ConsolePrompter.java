@@ -1,12 +1,9 @@
 package interaction.sender;
 
 import entity.OrganizationType;
-import exceptions.InvalidClassNameException;
-import interaction.instructions.base.*;
-import interaction.instructions.extended.ExecuteScript;
 
 import java.io.*;
-import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -18,37 +15,75 @@ public final class ConsolePrompter extends Prompter {
     interrogater.useLocale(Locale.UK);
   }
   // TODO: apply a NULL-safety code
-  @Override protected ParamsCollector getOrganization() {
-    pipe.print("Enter string Organization.name: ");
-    String name = interrogater.nextLine();
-    pipe.println("Entering Organization.coordinates as Coordinates:");
-    ParamsCollector coordinates = getCoordinates();
-    pipe.print("Enter some float fraction Organization.annualTurnover: ");
-    float annualTurnover = (float) interrogater.nextDouble();
-    interrogater.nextLine();
-    pipe.print("Enter string Organization.fullname: ");
-    String fullname = interrogater.nextLine();
-    pipe.print("Enter an integer Organization.employeesCount: ");
-    int employeesCount = interrogater.nextInt();
-    pipe.println("Elect OrganizationType.type: ");
-    for (OrganizationType orgtype : OrganizationType.values()) {
-      pipe.println("\t+ " + orgtype);
+  @Override protected ParamsCollector getOrganization() throws InputMismatchException {
+    String name = "";
+    ParamsCollector coordinates = null;
+    float annualTurnover = 0;
+    String fullName = "";
+    int employeesCount = 0;
+    String tempEnumName = "";
+    String enumName = "";
+    ParamsCollector officialAddress = null;
+    while (true) {
+      try {
+        pipe.print("Enter string Organization.name: ");
+        name = interrogater.nextLine();
+        pipe.print("Enter string Organization.fullname: ");
+        fullName = interrogater.nextLine();
+
+        pipe.println("Elect OrganizationType.type: ");
+        for (OrganizationType orgtype : OrganizationType.values()) {
+          pipe.println("\t+ " + orgtype);
+        }
+        while (true) {
+          tempEnumName = interrogater.nextLine();
+          switch (tempEnumName.toLowerCase()){
+            case "public":
+            case "trust":
+            case "private_limited_company":
+            case "open_joint_stock_company":
+              enumName = tempEnumName.toUpperCase();
+              break;
+            default:
+              System.err.println("Error:Illegal company type!");
+              pipe.println("Elect OrganizationType.type: ");
+              for (OrganizationType orgtype : OrganizationType.values()) {
+                pipe.println("\t+ " + orgtype);
+              }
+              continue;
+          }
+          break;
+        }
+        pipe.print("Enter an integer Organization.employeesCount: ");
+        employeesCount = interrogater.nextInt();
+        interrogater.nextLine();
+        pipe.print("Enter some float fraction Organization.annualTurnover: ");
+        annualTurnover = (float) interrogater.nextDouble();
+        interrogater.nextLine();
+        pipe.println("Entering Organization.coordinates as Coordinates:");
+        coordinates = getCoordinates();
+        pipe.println("Entering Organization.officialAddress as Address:");
+        officialAddress = getAddress();
+        break;
+      } catch (InputMismatchException e) {
+        interrogater.nextLine();
+        System.err.println("Error: Incorrect data format!");
+        System.out.println();
+      }
     }
-    interrogater.nextLine();
-    String enumName = interrogater.nextLine(); // TODO: possibly absence of enumeration constant
-    pipe.println("Entering Organization.officialAddress as Address:");
-    ParamsCollector officialAddress = getAddress();
-    return new ParamsCollector(
-        new ParamsCollector[]{coordinates, officialAddress},
-        new long[]{(long) employeesCount},
-        new double[]{(double) annualTurnover},
-        new String[]{name, fullname, enumName});
+      return new ParamsCollector(
+              new ParamsCollector[]{coordinates, officialAddress},
+              new long[]{(long) employeesCount},
+              new double[]{(double) annualTurnover},
+              new String[]{name, fullName, enumName});
   }
   @Override protected ParamsCollector getCoordinates() {
     pipe.print("Enter an integer Coordinates.x: ");
     int x = interrogater.nextInt();
+    interrogater.nextLine();
     pipe.print("Enter a float Coordinates.y: ");
     Float y = (float) interrogater.nextDouble();
+    interrogater.nextLine();
     return new ParamsCollector(null, new long[]{(long) x}, new double[]{(double) y}, null);
   }
   @Override protected ParamsCollector getAddress() {
@@ -61,10 +96,13 @@ public final class ConsolePrompter extends Prompter {
   @Override protected ParamsCollector getLocation() {
     pipe.print("Enter a long integer Location.x: ");
     long x = interrogater.nextLong();
+    interrogater.nextLine();
     pipe.print("Enter a long integer Location.y: ");
     long y = interrogater.nextLong();
+    interrogater.nextLine();
     pipe.print("Enter a double fraction Location.z: ");
     double z = interrogater.nextDouble();
+    interrogater.nextLine();
     return new ParamsCollector(null, new long[]{x, y}, new double[]{z},null);
   }
   @Override public boolean scan() {

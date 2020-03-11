@@ -17,7 +17,7 @@ public class RemoveKey extends Decree {
   }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "remove_key";
-  public static final String BRIEF = "";
+  public static final String BRIEF = "Удаляет элемент по [key].";
   public static final String SYNTAX = NAME + " [key]";
-  public static final String DESCRIPTION = "";
+  public static final String DESCRIPTION = "Удаляет элемент коллекции с указанным [key].";
 }

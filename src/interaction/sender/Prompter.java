@@ -1,5 +1,6 @@
 package interaction.sender;
 
+import java.util.Scanner;
 import interaction.instructions.Command;
 import interaction.instructions.base.*;
 import interaction.instructions.extended.*;
@@ -17,11 +18,9 @@ public abstract class Prompter implements Invoker {
     pipe = pipeout;
     dictionary = new HashMap<>();
   }
-
   public Scanner getInterrogater() {
     return this.interrogater;
   }
-
   @Override
   public void signup(String command_name, Command instruct) {
 
@@ -35,13 +34,29 @@ public abstract class Prompter implements Invoker {
       case Clear.NAME: dictionary.get(command_name).execute(); break;
       case Save.NAME: dictionary.get(command_name).execute(); break;
       case Exit.NAME: dictionary.get(command_name).execute(); break;
-      default: pipe.println("There is no such command yet...");
+      case Add.NAME:{
+        ParamsCollector collector = getOrganization();
+        Add command = (Add) dictionary.get(command_name);
+        command.commit(collector);
+        command.execute();
+        break;
+      }
+      default: pipe.println("Something wrong with your syntax or command \"" + command_name + "\" not found!\n" +
+              "Use \"help\" to find more information.");
     }
   }
-  protected void invoke(String command_name, String argument) {
+  protected void invoke(String command_name, String argument) throws NumberFormatException {
+    Integer key = null;
+    int id = 0;
     switch (command_name) {
       case Insert.NAME:{
-        Integer key = Integer.valueOf(argument);
+        try {
+          key = Integer.valueOf(argument);
+        }catch (NumberFormatException ex){
+          System.err.println("Error:Argument should be a number!");
+          ex.printStackTrace();
+          break;
+        }
         ParamsCollector collection = getOrganization();
         Insert command = (Insert) dictionary.get(command_name);
         command.commit(key, collection);
@@ -49,15 +64,27 @@ public abstract class Prompter implements Invoker {
       };
       break;
       case Update.NAME:{
-        int id = Integer.valueOf(argument);
+        try {
+          id = Integer.valueOf(argument);
+        }catch (NumberFormatException ex){
+          System.err.println("Error:Argument should be a number!");
+        }
         ParamsCollector collection = getOrganization();
         Update command = (Update) dictionary.get(command_name);
-        command.commit(id, collection);
-        command.execute();
+        if(command.commit(id, collection)){
+          command.execute();
+        }else {
+          System.err.println("Error:There is no such \"id\"!");
+        }
       };
       break;
       case RemoveKey.NAME:{
-        Integer key = Integer.valueOf(argument);
+        try {
+          key = Integer.valueOf(argument);
+        }catch (NumberFormatException ex){
+          System.err.println("Error:Argument should be a number!");
+          break;
+        }
         RemoveKey command = (RemoveKey) dictionary.get(command_name);
         command.openKey(key);
         command.execute();

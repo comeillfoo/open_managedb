@@ -31,6 +31,7 @@ public class Shell {
   private static final Invoker GeneralCaller = new ConsolePrompter(System.out, System.in);
   // starting actions
   static {
+    GeneralCaller.signup(Add.NAME, new Add(GeneralOperator));
     GeneralCaller.signup(Clear.NAME, new Clear(GeneralOperator));
     GeneralCaller.signup(Exit.NAME, new Exit(GeneralOperator));
     GeneralCaller.signup(Help.NAME, new Help(GeneralOperator, GeneralCaller.getMainStream()));

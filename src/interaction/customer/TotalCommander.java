@@ -104,9 +104,11 @@ public class TotalCommander extends Commander<Integer, Organization> {
 
   @Override
   public Integer search(Integer id) {
-    for (Map.Entry<Integer, Organization> enter : elements.entrySet())
-      if (id.equals(enter.getValue().getID()))
+    for (Map.Entry<Integer, Organization> enter : elements.entrySet()) {
+      if (id.equals(enter.getValue().getID())) {
         return enter.getKey();
+      }
+    }
     return null;
   }
   @Override
@@ -115,7 +117,9 @@ public class TotalCommander extends Commander<Integer, Organization> {
   }
   @Override
   public void remove(Integer key) {
-    elements.remove(key);
+    if(elements.containsKey(key)) {
+      elements.remove(key);
+    }else System.err.println("Error:There is no elements with such key!");
   }
   @Override
   public String survey(Indicator litmus) {
