@@ -2,108 +2,125 @@ package interaction.sender;
 
 import entity.OrganizationType;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public final class ConsolePrompter extends Prompter {
-  protected final Scanner interrogater;
+  private final Scanner interrogater;
   public ConsolePrompter(PrintStream pipeout, InputStream pipein) {
     super(pipeout);
-    interrogater = new Scanner(pipein);
+    recited = pipein;
+    interrogater = new Scanner(recited);
     interrogater.useLocale(Locale.UK);
   }
   // TODO: apply a NULL-safety code
-  @Override protected ParamsCollector getOrganization() throws InputMismatchException {
-    String name = "";
+  @Override protected ParamsCollector getOrganization() {
+    String name = scanLine(false, "Enter string Organization.name: ");
     ParamsCollector coordinates = null;
-    float annualTurnover = 0;
-    String fullName = "";
-    int employeesCount = 0;
-    String tempEnumName = "";
-    String enumName = "";
-    ParamsCollector officialAddress = null;
-    while (true) {
-      try {
-        pipe.print("Enter string Organization.name: ");
-        name = interrogater.nextLine();
-        pipe.print("Enter string Organization.fullname: ");
-        fullName = interrogater.nextLine();
-
-        pipe.println("Elect OrganizationType.type: ");
-        for (OrganizationType orgtype : OrganizationType.values()) {
-          pipe.println("\t+ " + orgtype);
-        }
-        while (true) {
-          tempEnumName = interrogater.nextLine();
-          switch (tempEnumName.toLowerCase()){
-            case "public":
-            case "trust":
-            case "private_limited_company":
-            case "open_joint_stock_company":
-              enumName = tempEnumName.toUpperCase();
-              break;
-            default:
-              System.err.println("Error:Illegal company type!");
-              pipe.println("Elect OrganizationType.type: ");
-              for (OrganizationType orgtype : OrganizationType.values()) {
-                pipe.println("\t+ " + orgtype);
-              }
-              continue;
+    while (coordinates == null) {
+      pipe.println("Entering Organization.coordinates as Coordinates:");
+      coordinates = getCoordinates();
+    }
+    String fullname = scanLine(true, "Enter string Organization.fullname: ");
+    float annualTurnover = 0f; int employeesCount = 0;
+    try {
+      annualTurnover = scanFraction((number) -> (number > 0), "Enter some float fraction Organization.annualTurnover: ").floatValue();
+      employeesCount = scanInteger((number) -> (number > 0), "Enter an integer Organization.employeesCount: ").intValue();
+    } catch (InputMismatchException e) {
+      pipe.println("Entered invalid number format. Please repeat your enterings from the very beginning.");
+      interrogater.nextLine();
+      return null;
+    }
+    pipe.println("Elect OrganizationType.type: ");
+    for (OrganizationType orgtype : OrganizationType.values()) {
+      pipe.println("\t+ " + orgtype);
+    }
+    String enumName = ""; boolean condition = false;
+    ENDLABEL:
+    {
+      condition = !condition;
+      while (condition) {
+        enumName = interrogater.nextLine(); // TODO: possibly absence of enumeration constant
+        for (OrganizationType orgtype : OrganizationType.values())
+          if (orgtype.toString().toUpperCase().startsWith(enumName.toUpperCase())) {
+            enumName = orgtype.toString();
+            break ENDLABEL;
           }
-          break;
-        }
-        pipe.print("Enter an integer Organization.employeesCount: ");
-        employeesCount = interrogater.nextInt();
-        interrogater.nextLine();
-        pipe.print("Enter some float fraction Organization.annualTurnover: ");
-        annualTurnover = (float) interrogater.nextDouble();
-        interrogater.nextLine();
-        pipe.println("Entering Organization.coordinates as Coordinates:");
-        coordinates = getCoordinates();
-        pipe.println("Entering Organization.officialAddress as Address:");
-        officialAddress = getAddress();
-        break;
-      } catch (InputMismatchException e) {
-        interrogater.nextLine();
-        System.err.println("Error: Incorrect data format!");
-        System.out.println();
       }
     }
-      return new ParamsCollector(
-              new ParamsCollector[]{coordinates, officialAddress},
-              new long[]{(long) employeesCount},
-              new double[]{(double) annualTurnover},
-              new String[]{name, fullName, enumName});
+    ParamsCollector officialAddress = null;
+    while (officialAddress == null) {
+      pipe.println("Entering Organization.officialAddress as Address:");
+      officialAddress = getAddress();
+    }
+    return new ParamsCollector(
+        new ParamsCollector[]{coordinates, officialAddress},
+        new long[]{(long) employeesCount},
+        new double[]{(double) annualTurnover},
+        new String[]{name, fullname, enumName});
   }
   @Override protected ParamsCollector getCoordinates() {
-    pipe.print("Enter an integer Coordinates.x: ");
-    int x = interrogater.nextInt();
-    interrogater.nextLine();
-    pipe.print("Enter a float Coordinates.y: ");
-    Float y = (float) interrogater.nextDouble();
-    interrogater.nextLine();
+    int x = 0; Float y = 0f;
+    try {
+      x = scanInteger((number) -> (true), "Enter an integer Coordinates.x: ").intValue();
+      y = scanFraction((number) -> (number > -538), "Enter a float Coordinates.y: ").floatValue();
+    } catch (InputMismatchException e) {
+      pipe.println("Entered invalid number format. Please repeat your enterings from the very beginning.");
+      interrogater.nextLine();
+      return null;
+    }
     return new ParamsCollector(null, new long[]{(long) x}, new double[]{(double) y}, null);
   }
   @Override protected ParamsCollector getAddress() {
-    pipe.print("Enter string Address.zipCode: ");
-    String zipCode = interrogater.nextLine();
-    pipe.println("Entering Address.town as Location:");
-    ParamsCollector town = getLocation();
+    String zipCode = scanLine(true, "Enter string Address.zipCode: ");
+    ParamsCollector town = null;
+    while (town == null) {
+      pipe.println("Entering Address.town as Location:");
+      town = getLocation();
+    }
     return new ParamsCollector(new ParamsCollector[]{town}, null, null, new String[]{zipCode});
   }
   @Override protected ParamsCollector getLocation() {
-    pipe.print("Enter a long integer Location.x: ");
-    long x = interrogater.nextLong();
-    interrogater.nextLine();
-    pipe.print("Enter a long integer Location.y: ");
-    long y = interrogater.nextLong();
-    interrogater.nextLine();
-    pipe.print("Enter a double fraction Location.z: ");
-    double z = interrogater.nextDouble();
-    interrogater.nextLine();
+    long x = 0, y = 0; double z = 0;
+    try {
+      x = scanInteger((number) -> (true), "Enter a long integer Location.x: ");
+      y = scanInteger((number) -> (true), "Enter a long integer Location.y: ");
+      z = scanFraction((number) -> (true), "Enter a double fraction Location.z: ");
+    } catch (InputMismatchException e) {
+      pipe.println("Entered invalid number format. Please repeat your enterings from the very beginnning.");
+      interrogater.nextLine();
+      return null;
+    }
     return new ParamsCollector(null, new long[]{x, y}, new double[]{z},null);
+  }
+  private Long scanInteger(NumChecker<Long> requests, String message) throws InputMismatchException {
+    Long number = null;
+    do {
+      pipe.print(message);
+      number = interrogater.nextLong();
+      interrogater.nextLine();
+    } while (number == null || !requests.check(number));
+    return number;
+  }
+  private Double scanFraction(NumChecker<Double> requests, String message) throws InputMismatchException {
+    Double number = null;
+    do {
+      pipe.print(message);
+      number = interrogater.nextDouble();
+      interrogater.nextLine();
+    } while (number == null || !requests.check(number));
+    return number;
+  }
+  private String scanLine(boolean mayBeEmpty, String message) {
+    String line = null;
+    do {
+      pipe.print(message);
+      line = interrogater.nextLine();
+    } while (line == null || (line.isEmpty() && !mayBeEmpty));
+    return line;
   }
   @Override public boolean scan() {
     String reply = "";
@@ -114,9 +131,16 @@ public final class ConsolePrompter extends Prompter {
     String[] parsyee = reply.split(" ");
     if (parsyee == null || parsyee.length == 0 || !dictionary.containsKey(parsyee[0]))
       return true;
-    if (parsyee.length > 1)
-      invoke(parsyee[0], parsyee[1]);
-    else invoke(parsyee[0]);
+    try {
+      if (parsyee.length > 1)
+        return invoke(parsyee[0], parsyee[1]);
+      else return invoke(parsyee[0]);
+    } catch (NumberFormatException e) {
+      pipe.println("Invalid command argument format:");
+      pipe.println("Notice, please: " + dictionary.get(parsyee[0]));
+      pipe.println(e.getMessage());
+      pipe.println("For more information type \"help\" and try again...");
+    }
     return false;
   }
 }

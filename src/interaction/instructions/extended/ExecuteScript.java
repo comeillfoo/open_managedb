@@ -4,7 +4,7 @@ import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
 public class ExecuteScript extends Decree {
-  protected ExecuteScript(Receiver receiver) {
+  public ExecuteScript(Receiver receiver) {
     super(receiver);
   }
   @Override public void execute() {
