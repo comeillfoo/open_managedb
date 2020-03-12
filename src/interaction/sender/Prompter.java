@@ -41,7 +41,6 @@ public abstract class Prompter implements Invoker {
     pipe = pipeout;
     dictionary = new HashMap<>();
   }
-
   /**
    * Дополнительный конструктор для Invoker'ов вызываемых из других Invoker'ов.
    * @param pipeout поток вывода для общения с пользователем
@@ -115,7 +114,12 @@ public abstract class Prompter implements Invoker {
         command.execute();}
       return true;
       case RemoveKey.NAME:{
-        Integer key = Integer.valueOf(argument);
+        try {
+          key = Integer.valueOf(argument);
+        }catch (NumberFormatException ex){
+          System.err.println("Error:Argument should be a number!");
+          break;
+        }
         RemoveKey command = (RemoveKey) dictionary.get(command_name);
         command.openKey(key);
         command.execute();}

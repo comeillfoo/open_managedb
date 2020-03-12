@@ -20,7 +20,8 @@ public class Insert extends Committer {
   @Override public String toString() {return NAME + " : " + SYNTAX;}
 
   public static final String NAME = "insert";
-  public static final String BRIEF = "";
+  public static final String BRIEF = "Добавляет элемент с указанным [key] в колекцию.";
   public static final String SYNTAX = NAME + " [key] {element}";
-  public static final String DESCRIPTION = "";
+  public static final String DESCRIPTION = "Добавляет элемент в коллекцию с указанным пользователем ключом [key].\n" +
+          "После указания [key], пользователю предлагается заполнить параметры нового элемента.";
 }
