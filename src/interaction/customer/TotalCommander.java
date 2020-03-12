@@ -10,19 +10,17 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 // io package
-import java.io.IOException;
-import java.io.PrintStream;
 // input:
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 // output:
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
 import java.util.Map;
 
 /**
@@ -84,19 +82,36 @@ public class TotalCommander extends Commander<Integer, Organization> {
    */
   @Override public List<Organization> load() {
     Organizations companies = null; // TODO: eliminate "maybe null" remaining
-    try(InputStream streamin = new FileInputStream(System.getProperty("user.dir") + "/" + System.getenv(envVar));
+    String pathname = System.getProperty("user.dir") + "/" + System.getenv(envVar);
+    Path p = Paths.get(pathname);
+    try(InputStream streamin = new FileInputStream(pathname);
         InputStreamReader reader = new InputStreamReader(streamin);
     ) {
+      BasicFileAttributes bfa = Files.readAttributes(p, BasicFileAttributes.class);
+      creationDate = bfa.creationTime().toString();
       JAXBContext loader = null;
       try {
         loader = JAXBContext.newInstance(Organizations.class);
         Unmarshaller subloader = loader.createUnmarshaller();
         companies = (Organizations) subloader.unmarshal(reader); // TODO: "maybe null"
       } catch (JAXBException e) {
-        System.err.println(e.getErrorCode() + ": " + e.getMessage());
+        System.err.println(e.getMessage());
         System.err.println(e.getStackTrace());
         System.exit(1);
       }
+    } catch (FileNotFoundException e) {
+      companies = new Organizations();
+      File blank = new File(System.getProperty("user.dir") + "/sample.xml");
+      try {
+        blank.createNewFile();
+      } catch (IOException err){
+        System.err.println(err.getMessage());
+        System.err.println(err.getStackTrace());
+        System.exit(25);
+      }
+      System.err.println(e.getMessage());
+      System.err.println("Файл с данным именем не был найден, поэтому теперь вы будете работать с пустой коллекцией в файле:\n" +
+          System.getProperty("user.dir" + "/sample.xml"));
     } catch (IOException e) {
       System.err.println(e.getMessage());
       System.err.println(e.getStackTrace());

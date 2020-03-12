@@ -1,5 +1,7 @@
 package interaction.sender;
 
+import exceptions.FileInvalidSyntaxException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -87,17 +89,16 @@ public final class FilePrompter extends Prompter {
       while (reader.ready()) {
         String line = readline();
         String[] parsyee = line.split(" ");
-        if (parsyee == null || parsyee.length == 0 || !dictionary.containsKey(parsyee[0]))
-          return true;
+          if (parsyee == null || parsyee.length == 0 || !dictionary.containsKey(parsyee[0]))
+            throw new FileInvalidSyntaxException();
         if (parsyee.length > 1)
           invoke(parsyee[0], parsyee[1]);
         else invoke(parsyee[0]);
-        return false;
       }
-    } catch (IOException e) {
+    } catch (IOException | FileInvalidSyntaxException e) {
       pipe.println(e.getMessage());
       pipe.println(e.getStackTrace());
     }
-    return true;
+    return false;
   }
 }

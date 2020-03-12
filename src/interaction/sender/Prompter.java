@@ -122,7 +122,7 @@ public abstract class Prompter implements Invoker {
       return true;
       case ExecuteScript.NAME:{
         FilePrompter filePrompter = null;
-        try(FileInputStream input = new FileInputStream(argument)) {
+        try(FileInputStream input = new FileInputStream(System.getProperty("user.dir") + "/scripts/" + argument)) {
           Prompter pointer = node;
           boolean isCollission = false;
           while (pointer != null) {
@@ -130,9 +130,11 @@ public abstract class Prompter implements Invoker {
               isCollission = true;
             pointer = pointer.node;
           }
-          if (!isCollission)
+          if (!isCollission) {
             filePrompter = new FilePrompter(System.err, input);
-          else throw new RecursionFoundException();
+            for (Map.Entry<String, Command> enter: dictionary.entrySet()) filePrompter.dictionary.put(enter.getKey(), enter.getValue());
+            while (filePrompter.scan());
+          } else throw new RecursionFoundException();
         } catch (IOException e) {
           filePrompter.pipe.println(e.getMessage());
           filePrompter.pipe.println(e.getStackTrace());
@@ -213,13 +215,13 @@ public abstract class Prompter implements Invoker {
     }
 
     /**
-     *
-     * @return
+     * Геттер для получения ссылки на массив ссылок на внутренние хранилища параметров
+     * @return массив ссылок на экземпляры ParamsCollector, т.е. на свой же тип
      */
     public ParamsCollector[] getInternals() { return internals; }
 
     /**
-     *
+     * Геттер для получения ссылки массива
      * @return
      */
     public long[] getIntegers() { return integers; }

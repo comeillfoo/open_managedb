@@ -32,7 +32,7 @@ public class Organization implements Mappable<Integer> {
   /**
    * Геттер для получения имени элемента,
    * написан лишь, чтобы корректно работала библиотека JAXB
-   * (переопределен из интерфейса Mappble)
+   * (переопределен из интерфейса Mappable)
    * @return String name название организации
    */
   @Override public String getName() { return name; }
@@ -58,6 +58,7 @@ public class Organization implements Mappable<Integer> {
    * @return String name название организации
    */
   public ZonedDateTime getCreationDate() { return creationDate; }
+
   @XmlAttribute(name = "annual-turnover")
   private final float annualTurnover;
 
@@ -68,6 +69,7 @@ public class Organization implements Mappable<Integer> {
    * @return String name название организации
    */
   public float getAnnualTurnOver() { return annualTurnover; }
+
   @XmlElement(name = "fullname")
   @NotNull
   private final String fullname;
@@ -79,6 +81,7 @@ public class Organization implements Mappable<Integer> {
    * @return String name название организации
    */
   public String getFullname() { return fullname; }
+
   @XmlAttribute(name = "employees-count")
   private final int employeesCount;
 
@@ -89,6 +92,7 @@ public class Organization implements Mappable<Integer> {
    * @return String name название организации
    */
   public int getEmployees() { return employeesCount; }
+
   @XmlElement(name = "organization-type", required = true)
   @Nullable
   private final OrganizationType type;
@@ -100,6 +104,7 @@ public class Organization implements Mappable<Integer> {
    * @return String name название организации
    */
   public OrganizationType getType() { return type; }
+
   @XmlElement(name = "official-address")
   @Nullable
   private final Address officialAddress;
@@ -118,7 +123,6 @@ public class Organization implements Mappable<Integer> {
    * @see Organization#Organization(String, Coordinates, float, String, int, OrganizationType, Address)
    */
   public Organization() {
-    id = hashCode() + count++;
     name  = "Sample Organization";
     coordinates = new Coordinates();
     annualTurnover = 0;
@@ -126,6 +130,7 @@ public class Organization implements Mappable<Integer> {
     employeesCount = 0;
     type = OrganizationType.PUBLIC;
     officialAddress = new Address();
+    id = hashCode() + count++;
   }
 
   /**
@@ -141,7 +146,6 @@ public class Organization implements Mappable<Integer> {
   public Organization(String name, Coordinates coordinates,
                       float annualTurnover, String fullname,
                       int employeesCount, OrganizationType type, Address officialAddress) {
-    id = hashCode() + count++;
     this.name = name;
     this.coordinates = coordinates;
     this.annualTurnover = annualTurnover;
@@ -149,7 +153,7 @@ public class Organization implements Mappable<Integer> {
     this.employeesCount = employeesCount;
     this.type = type;
     this.officialAddress = officialAddress;
-
+    id = hashCode() + count++;
   }
   /**
    *

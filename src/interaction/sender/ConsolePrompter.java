@@ -38,7 +38,19 @@ public final class ConsolePrompter extends Prompter {
     for (OrganizationType orgtype : OrganizationType.values()) {
       pipe.println("\t+ " + orgtype);
     }
-    String enumName = interrogater.nextLine(); // TODO: possibly absence of enumeration constant
+    String enumName = ""; boolean condition = false;
+    ENDLABEL:
+    {
+      condition = !condition;
+      while (condition) {
+        enumName = interrogater.nextLine(); // TODO: possibly absence of enumeration constant
+        for (OrganizationType orgtype : OrganizationType.values())
+          if (orgtype.toString().toUpperCase().startsWith(enumName.toUpperCase())) {
+            enumName = orgtype.toString();
+            break ENDLABEL;
+          }
+      }
+    }
     ParamsCollector officialAddress = null;
     while (officialAddress == null) {
       pipe.println("Entering Organization.officialAddress as Address:");

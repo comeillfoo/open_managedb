@@ -1,6 +1,11 @@
 package interaction.customer;
 
 import entity.Mappable;
+import entity.OrganizationList;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +20,7 @@ import java.util.Map;
 abstract class Commander<K, V extends Mappable<K>> implements Receiver<K, V> {
   protected final Map<K, V> elements;
   protected final String envVar;
-
+  protected String creationDate = ZonedDateTime.now().toString();
   /**
    * Конструктор, для создания и загрузки коллекции из файла,
    * которое передается в переменной окружения, название которой передается
@@ -36,9 +41,11 @@ abstract class Commander<K, V extends Mappable<K>> implements Receiver<K, V> {
   @Override public String review() {
     Class studyee = elements.getClass();
     StringBuilder info = new StringBuilder("\t* Collection canonical name: " + studyee.getCanonicalName() + ";\n");
-    info.append("\t* Collection type name: " + studyee.getTypeName() + ";\n");
+    info.append("\t* Collection creation date: " + creationDate + ";\n");
+    Type[] types = ((ParameterizedType)OrganizationList.class.getGenericSuperclass()).getActualTypeArguments();
+    info.append("\t* Collection element type name: " + (types != null? types[0] : "undefined type") + ";\n");
     info.append("\t* Is collection empty?: " + elements.isEmpty() + ";\n");
-    info.append("\t* Collection size: " + elements.size() + ";\n");
+    info.append("\t* Collection size: " + elements.size() + ";");
     return info.toString();
   }
 }

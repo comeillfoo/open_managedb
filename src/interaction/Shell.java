@@ -50,6 +50,7 @@ public class Shell {
     GeneralCaller.signup(MaxByDate.NAME, new MaxByDate(GeneralOperator));
     GeneralCaller.signup(SumOfAnnualTurnover.NAME, new SumOfAnnualTurnover(GeneralOperator, GeneralCaller.getMainStream()));
     GeneralCaller.signup(FilterContainsName.NAME, new FilterContainsName(GeneralOperator));
+    GeneralCaller.signup(ExecuteScript.NAME, new ExecuteScript(GeneralOperator));
   }
 
   /**
