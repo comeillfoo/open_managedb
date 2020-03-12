@@ -23,7 +23,11 @@ import interaction.instructions.base.*;
  * </p>
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
- * @see Invoker, Receiver, Prompter, Commander, TotalCommander, ConsolePrompter...
+ * @see Invoker
+ * @see Receiver
+ * @see interaction.sender.Prompter
+ * @see TotalCommander
+ * @see ConsolePrompter
  */
 public class Shell {
   private static final String environment = "DBPATH"; // title of environment variable
@@ -31,6 +35,7 @@ public class Shell {
   private static final Invoker GeneralCaller = new ConsolePrompter(System.out, System.in);
   // starting actions
   static {
+    GeneralCaller.signup(Add.NAME, new Add(GeneralOperator));
     GeneralCaller.signup(Clear.NAME, new Clear(GeneralOperator));
     GeneralCaller.signup(Exit.NAME, new Exit(GeneralOperator));
     GeneralCaller.signup(Help.NAME, new Help(GeneralOperator, GeneralCaller.getMainStream()));
@@ -46,7 +51,14 @@ public class Shell {
     GeneralCaller.signup(MaxByDate.NAME, new MaxByDate(GeneralOperator));
     GeneralCaller.signup(SumOfAnnualTurnover.NAME, new SumOfAnnualTurnover(GeneralOperator, GeneralCaller.getMainStream()));
     GeneralCaller.signup(FilterContainsName.NAME, new FilterContainsName(GeneralOperator));
+    GeneralCaller.signup(ExecuteScript.NAME, new ExecuteScript(GeneralOperator));
   }
+
+  /**
+   * Обычный метод main, который и вызывает всю эту <cite>гавнину</cite> из пакетных глубин, так сказать
+   * <em>виновник</em> сего торжества.
+   * @param args просто аргументы командной строки
+   */
   public static void main(String[] args) {
     while (true) {
       while (GeneralCaller.scan());

@@ -6,7 +6,27 @@ import entity.Organization;
 import entity.OrganizationType;
 import interaction.sender.Prompter;
 
+/**
+ * Класс-фабрика организаций
+ * Создает из объекта сериализации организацию,
+ * путем разбора его отдельных компонент.
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ * @see Factory
+ * @see LocationBuilder
+ * @see AddressBuilder
+ * @see CoordinatesBuilder
+ * @see Address
+ * @see Coordinates
+ * @see Organization
+ */
 public class OrganizationBuilder implements Factory<Organization> {
+  /**
+   * Метод, переопределенный из обобщенного интерфейса Factory
+   * Создает экземпляр типа T, в данном случае Organization
+   * @param parts объект сериализации, хранящий лишь неупорядоченные данные
+   * @return объект типа Organization - организация
+   */
   @Override
   public Organization make(Prompter.ParamsCollector parts) {
     Prompter.ParamsCollector[] internals = parts.getInternals();
