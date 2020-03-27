@@ -2,6 +2,8 @@ package interaction.customer;
 
 import entity.Mappable;
 import entity.OrganizationList;
+import interaction.sender.ConsolePrompter;
+import interaction.sender.Invoker;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -19,21 +21,30 @@ import java.util.Map;
  */
 abstract class Commander<K, V extends Mappable<K>> implements Receiver<K, V> {
   protected final Map<K, V> elements;
-  protected final String envVar;
+  protected final String environ;
+  protected Invoker subscriber = new ConsolePrompter(System.out, System.in);
   protected String creationDate = ZonedDateTime.now().toString();
   /**
    * Конструктор, для создания и загрузки коллекции из файла,
    * которое передается в переменной окружения, название которой передается
    * в качестве параметра
-   * @param envVar String название переменной окружения, хранящей название файла
+   * @param environ String название переменной окружения, хранящей название файла
    */
-  protected Commander(String envVar) {
-    this.envVar = envVar;
+  protected Commander(String environ) {
+    this.environ = environ == null || environ.isEmpty()? "TUTOR" : environ;
     elements = new HashMap<>();
-    for (V element : load())
-      add(element);
+    try {
+      for (V element : load())
+        add(element);
+    } catch (NullPointerException e){
+      e.getMessage();
+    }
   }
-
+  /**
+   * Метод уведомления подписчиков
+   * @param message сообщение-уведомление
+   */
+  protected abstract void notify(String message);
   /**
    * Переопределеный метод, дающий общую информацию о коллекции
    * @return String базовая информация о хранящейся коллекции

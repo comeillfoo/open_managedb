@@ -18,5 +18,5 @@ interface Factory<T> {
    * @param parts объект сериализации, хранящий лишь неупорядоченные данные
    * @return объект типа T, где T - тип производимой продукции
    */
-  <T> T make(Prompter.ParamsCollector parts);
+  <T> T make(Prompter.Junker parts);
 }

@@ -35,6 +35,7 @@ public class Shell {
   private static final Invoker GeneralCaller = new ConsolePrompter(System.out, System.in);
   // starting actions
   static {
+    GeneralOperator.subscribe(GeneralCaller);
     GeneralCaller.signup(Add.NAME, new Add(GeneralOperator));
     GeneralCaller.signup(Clear.NAME, new Clear(GeneralOperator));
     GeneralCaller.signup(Exit.NAME, new Exit(GeneralOperator));
@@ -50,7 +51,7 @@ public class Shell {
     GeneralCaller.signup(RemoveLower.NAME, new RemoveLower(GeneralOperator));
     GeneralCaller.signup(MaxByDate.NAME, new MaxByDate(GeneralOperator));
     GeneralCaller.signup(SumOfAnnualTurnover.NAME, new SumOfAnnualTurnover(GeneralOperator, GeneralCaller.getMainStream()));
-    GeneralCaller.signup(FilterContainsName.NAME, new FilterContainsName(GeneralOperator));
+    GeneralCaller.signup(FilterContainsName.NAME, new FilterContainsName(GeneralOperator, GeneralCaller.getMainStream()));
     GeneralCaller.signup(ExecuteScript.NAME, new ExecuteScript(GeneralOperator));
   }
 

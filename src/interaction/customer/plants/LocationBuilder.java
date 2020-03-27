@@ -23,7 +23,8 @@ class LocationBuilder implements Factory<Location> {
    * @return объект типа Location - место
    */
   @Override
-  public Location make(Prompter.ParamsCollector parts) {
+  public Location make(Prompter.Junker parts) {
+    if (parts == null) return null;
     long[] integers = parts.getIntegers();
     double[] fractions = parts.getFractions();
     return new Location(integers[0], new Long(integers[1]), fractions[0]);

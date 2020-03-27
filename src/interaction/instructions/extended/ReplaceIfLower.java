@@ -5,19 +5,40 @@ import interaction.customer.Receiver;
 import interaction.instructions.extended.comparators.OrganizationComparator;
 import interaction.sender.Prompter;
 
+/**
+ * Команда "replace_if_lower" заменяет объект на пользовательский,если параметры этого объекта больше чем у пользовательского объекта.
+ * @author Come_1LL_F00 aka Lenar Khannanov
+ * @author Leargy aka Anton Sushkevich
+ */
 public class ReplaceIfLower extends ReplaceIf {
   private Integer key;
   public ReplaceIfLower(Receiver receiver) {
     super(receiver);
-    litmus = (subject) -> (new OrganizationComparator().compare((Organization) sieve.cook(committed), (Organization) subject) == -1);
+    litmus = (subject) -> (new OrganizationComparator().compare((Organization) sieve.cook(committed), (Organization) subject) < 0);
   }
-  public void openKey(Integer key) {
-    if (key != null)
+
+  /**
+   * Метод сохраняющий ссылку на значение ключа если объект с заданным ключом существует.
+   * @param key ключ по которому будет заменяться объект
+   * @return boolean
+   */
+  public boolean openKey(Integer key) {
+    if (key != null && sieve.lookFor(key).getName().equals("Sample Organization") == false) {
       this.key = key;
-    else key = -1;
+      return true;
+    }
+    else {
+      key = -1;
+      return false;
+    }
   }
+
+  /**
+   * @param element сам добавляемый элемент, точнее его параметры
+   * @return
+   */
   @Override
-  public boolean commit(Prompter.ParamsCollector element) {
+  public boolean commit(Prompter.Junker element) {
     if (element != null) {
       committed = element;
       return true;
@@ -25,7 +46,15 @@ public class ReplaceIfLower extends ReplaceIf {
   }
 
   @Override
-  public void execute() { sieve.add(key, sieve.cook(committed), litmus); }
+  public String toString(){ return NAME + " : " + SYNTAX; }
+
+  @Override
+  public void execute() {
+    sieve.add(key, sieve.cook(committed), litmus);
+    if(litmus.detect(sieve.lookFor(key))) {
+      System.out.println("Replacement: success!");
+    }else System.out.println("Replacement: not produced!");
+  }
   public static final String NAME = "replace_if_lower";
   public static final String BRIEF = "заменяет на новое значение по ключу [key], если оно меньше старого";
   public static final String SYNTAX = NAME + " [key] {element}";

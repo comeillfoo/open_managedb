@@ -1,0 +1,26 @@
+clear
+replace_if_greater -1808500780
+Organization.name: -395095317
+Coordinates.x: -7612202274120990640
+Coordinates.y: 0.13181399451882914
+Organization.fullname: -91803436778827058614138782181931565976
+Organization.annualTurnover: 0.43791001320524015
+Organization.employeesCount: 335880818
+Organization.type: public
+Address.zipCode: 2085939090
+Location.x: 863647222
+Location.y: 1821817163
+Location.z: 1396446379
+replace_if_lower -1142987402
+Organization.name: 1514982522
+Coordinates.x: 7561043697265833621
+Coordinates.y: 0.3987077784068228
+Organization.fullname: -74991269574711328
+Organization.annualTurnover: 0.7131011847739083
+Organization.employeesCount: 1760767456
+Organization.type: public
+Address.zipCode: 1416970499
+Location.x: 1207584427
+Location.y: 1277513719
+Location.z: 432201200
+show

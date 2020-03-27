@@ -155,10 +155,6 @@ public class Organization implements Mappable<Integer> {
     this.officialAddress = officialAddress;
     id = hashCode() + count++;
   }
-  /**
-   *
-   * @return
-   */
   public int getID() {return id;}
   @Override
   public String toString() {
@@ -173,13 +169,8 @@ public class Organization implements Mappable<Integer> {
   }
   @Override
   public int hashCode() {
-    return (int)((name.hashCode() + fullname.hashCode()) * (annualTurnover % employeesCount) + creationDate.hashCode() + coordinates.hashCode() + type.hashCode() + officialAddress.hashCode()) % 0xdead;
+    return Math.abs((int)((name.hashCode() + fullname.hashCode()) * (annualTurnover % employeesCount) + creationDate.hashCode() + coordinates.hashCode() + type.hashCode() + officialAddress.hashCode() * 0xdead));
   }
-
-  /**
-   *
-   * @return
-   */
   @Override
   public Integer getKey() {
     return id;

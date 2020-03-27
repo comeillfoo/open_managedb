@@ -3,6 +3,9 @@ package interaction.instructions.base;
 import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
+/**
+ * Класс команды очистки коллекции
+ */
 public class Clear extends Decree {
   public Clear(Receiver receiver) {super(receiver);}
   @Override public void execute() {sieve.clear();}

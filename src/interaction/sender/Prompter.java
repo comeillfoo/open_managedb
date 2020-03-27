@@ -34,15 +34,15 @@ public abstract class Prompter implements Invoker {
 
   /**
    * Стандартный конструктор класса, выставляющий все поля по умолчанию
-   * Для основного Invoker'а
+   * Для основного {@link Invoker}'а
    * @param pipeout поток вывода для общения с пользователем
    */
-  protected Prompter(PrintStream pipeout) {
+  public Prompter(PrintStream pipeout) {
     pipe = pipeout;
     dictionary = new HashMap<>();
   }
   /**
-   * Дополнительный конструктор для Invoker'ов вызываемых из других Invoker'ов.
+   * Дополнительный конструктор для {@link Invoker}'ов вызываемых из других {@link Invoker}'ов.
    * @param pipeout поток вывода для общения с пользователем
    * @param upnode ссылка на предыдущий Invoker, из которого произошел вызов
    */
@@ -77,13 +77,22 @@ public abstract class Prompter implements Invoker {
       case Exit.NAME:
       case SumOfAnnualTurnover.NAME:
       case MaxByDate.NAME: dictionary.get(command_name).execute(); return true;
-      case RemoveLower.NAME: {
-        ParamsCollector element = null;
-        while (element == null) element = getOrganization();
-        dictionary.get(command_name).execute();}
+      case Add.NAME:
+      case RemoveLower.NAME:
+        Junker element = null;
+        if (!(this instanceof FilePrompter)) while (element == null) element = getOrganization();
+        else {
+          element = getOrganization();
+          if (element == null) {
+            pipe.println("Произошли ошибки при чтении файла: за подробной информацией смотреть выше");
+            return false;
+          }
+        }
+        if (command_name.equals(Add.NAME)) ((Add)dictionary.get(command_name)).commit(element);
+        if (command_name.equals(RemoveLower.NAME)) ((RemoveLower)dictionary.get(command_name)).commit(element);
+        dictionary.get(command_name).execute();
       return true;
-      default: pipe.println("There is no such command yet...");
-      return false;
+      default: pipe.println("Команды с названием " + command_name + " не найдено"); return false;
     }
   }
 
@@ -99,77 +108,135 @@ public abstract class Prompter implements Invoker {
     switch (command_name) {
       case Insert.NAME: {
         Integer key = Integer.valueOf(argument);
-        ParamsCollector element = null;
-        while (element == null) element = getOrganization();
+        Junker element = null;
+        if (!(this instanceof FilePrompter))
+          while (element == null) element = getOrganization();
+        else {
+          element = getOrganization();
+          if (element == null) {
+            pipe.println("Произошли ошибки при чтении файла: за подробной информацией смотреть выше");
+            return false;
+          }
+        }
         Insert command = (Insert) dictionary.get(command_name);
         command.commit(key, element);
-        command.execute();}
+        command.execute();
+      }
       return true;
-      case Update.NAME:{
+      case Update.NAME: {
         int id = Integer.valueOf(argument);
-        ParamsCollector element = null;
-        while (element == null) element = getOrganization();
+        Junker element = null;
         Update command = (Update) dictionary.get(command_name);
-        command.commit(id, element);
-        command.execute();}
+        if (command.commit(id, element)) {
+          if (!(this instanceof FilePrompter))
+            while (element == null) element = getOrganization();
+          else {
+            element = getOrganization();
+            if (element == null) {
+              pipe.println("Произошли ошибки при чтении файла: за подробной информацией смотреть выше");
+              return false;
+            }
+          }
+          command.commit(id, element);
+          command.execute();
+        } else { pipe.println("No such id: " + id); return false; }
+      }
       return true;
-      case RemoveKey.NAME:{
+      case RemoveKey.NAME: {
+        Integer key;
         try {
           key = Integer.valueOf(argument);
-        }catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
           System.err.println("Error:Argument should be a number!");
-          break;
+          return false;
         }
         RemoveKey command = (RemoveKey) dictionary.get(command_name);
         command.openKey(key);
-        command.execute();}
+        command.execute();
+      }
       return true;
-      case ExecuteScript.NAME:{
-        FilePrompter filePrompter = null;
-        try(FileInputStream input = new FileInputStream(System.getProperty("user.dir") + "/scripts/" + argument)) {
-          Prompter pointer = node;
+      // обработка execute_script:
+      case ExecuteScript.NAME: {
+        String filename = argument;
+        ExecuteScript command = (ExecuteScript) dictionary.get(ExecuteScript.NAME);
+        String sep = System.getProperty("file.separator");
+        try (InputStream istream = new FileInputStream("scripts" + sep + filename)) {
           boolean isCollission = false;
+          Prompter pointer = this;
           while (pointer != null) {
-            if (pointer.recited.equals(input))
-              isCollission = true;
+            if (istream.equals(pointer.recited)) isCollission = true;
             pointer = pointer.node;
           }
-          if (!isCollission) {
-            filePrompter = new FilePrompter(System.err, input);
-            for (Map.Entry<String, Command> enter: dictionary.entrySet()) filePrompter.dictionary.put(enter.getKey(), enter.getValue());
-            while (filePrompter.scan());
-          } else throw new RecursionFoundException();
+          try {
+            if (isCollission) throw new RecursionFoundException();
+          } catch (RecursionFoundException e) {
+            pipe.println("Обнаружена попытка создать рекурсию. Проверьте последовательность запуска файлов.");
+            return true;
+          }
+        } catch (FileNotFoundException e) {
+          pipe.println("Файл по заданному имени не найден. Проверьте лежит ли " + filename + "в папке scripts");
+          return true;
         } catch (IOException e) {
-          filePrompter.pipe.println(e.getMessage());
-          filePrompter.pipe.println(e.getStackTrace());
-        } catch (RecursionFoundException e) {
+          pipe.println("Произошла критическая ошибка в вашей файловой системе.");
+          System.exit(0);
         }
+        command.setFile(filename);
+        command.setCommandList(dictionary);
+        command.execute();
       }
       return true;
       case ReplaceIfLower.NAME: {
         Integer key = Integer.valueOf(argument);
-        ParamsCollector element = null;
-        while (element == null) element = getOrganization();
+        Junker element = null;
+        if (!(this instanceof FilePrompter))
+          while (element == null) element = getOrganization();
+        else {
+          element = getOrganization();
+          if (element == null) {
+            pipe.println("Произошли ошибки при чтении файла: за подробной информацией смотреть выше");
+            return false;
+          }
+        }
         ReplaceIfLower command = (ReplaceIfLower) dictionary.get(command_name);
-        command.openKey(key);
-        command.commit(element);
-        command.execute();}
+        if (command.openKey(key)) {
+          while (element == null) element = getOrganization();
+          command.openKey(key);
+          command.commit(element);
+          command.execute();
+        } else {
+          System.out.println("No such key: " + key);
+        }
+      }
       return true;
       case ReplaceIfGreater.NAME: {
         Integer key = Integer.valueOf(argument);
-        ParamsCollector element = null;
-        while (element == null) element = getOrganization();
+        Junker element = null;
         ReplaceIfGreater command = (ReplaceIfGreater) dictionary.get(command_name);
-        command.openKey(key);
-        command.commit(element);}
-      return true;
-      case FilterContainsName.NAME: {
-        FilterContainsName command = (FilterContainsName) dictionary.get(command_name);
-        command.searchFor(argument);
-        command.execute();}
-      return true;
-      default: pipe.println("There is no command with such number of arguments...");
-      return false;
+        if (command.openKey(key)) {
+          if (!(this instanceof FilePrompter))
+            while (element == null) element = getOrganization();
+          else {
+            element = getOrganization();
+            if (element == null) {
+              pipe.println("Произошли ошибки при чтении файла: за подробной информацией смотреть выше");
+              return false;
+            }
+          }
+          command.openKey(key);
+          command.commit(element);
+          command.execute();
+        } else {
+          System.out.println("No such key: " + key);
+        }
+      }
+        return true;
+        case FilterContainsName.NAME: {
+          FilterContainsName command = (FilterContainsName) dictionary.get(command_name);
+          command.searchFor(argument);
+          command.execute();
+        }
+        return true;
+        default: { pipe.println("Команда по имени: " + command_name + " не найдена"); return false; }
     }
   }
 
@@ -177,7 +244,7 @@ public abstract class Prompter implements Invoker {
    * Геттер, выкидывающий ссылку на поток вывода
    * @return ссылка на поток вывода, с помощью которога уведомляется пользователь
    */
-  @Override public PrintStream getMainStream() {return pipe;}
+  @Override public PrintStream getMainStream() { return pipe;}
 
   /**
    * Внутренний класс, инкапсулирующий параметры собираемых объектов, между
@@ -198,69 +265,68 @@ public abstract class Prompter implements Invoker {
    * @see interaction.customer.TotalCommander
    * @see Invoker
    */
-  public final class ParamsCollector {
-    private final ParamsCollector[] internals;
+  public final class Junker {
+    private final Junker[] internals;
     private final long[] integers;
     private final double[] fractions;
     private final String[] lines;
 
     /**
-     *
-     * @param internals
-     * @param integers
-     * @param fractions
-     * @param lines
+     * Развернутый конструктор для указания всех параметров
+     * @param internals ParamsCollector[] ссылка на массив сборщика внутренних араметров
+     * @param integers long[] массив значений целочисленных полей
+     * @param fractions double[] массив значений действительных полей
+     * @param lines String[] массив строковых данных
      */
-    ParamsCollector(ParamsCollector[] internals, long[] integers, double[] fractions, String[] lines) {
+    public Junker(Junker[] internals, long[] integers, double[] fractions, String[] lines) {
       this.internals = internals;
       this.integers = integers;
       this.fractions = fractions;
       this.lines = lines;
     }
-
     /**
      * Геттер для получения ссылки на массив ссылок на внутренние хранилища параметров
-     * @return массив ссылок на экземпляры ParamsCollector, т.е. на свой же тип
+     * @return массив ссылок на экземпляры {@link Junker}, т.е. на свой же тип
      */
-    public ParamsCollector[] getInternals() { return internals; }
-
+    public Junker[] getInternals() { return internals; }
     /**
-     * Геттер для получения ссылки массива
-     * @return
+     * Геттер для получения ссылки массива целочисленных полей
+     * @return long[] массив целых значений поля объекта
      */
     public long[] getIntegers() { return integers; }
-
     /**
-     *
-     * @return
+     * Геттер для получения ссылки на массив дробных полей
+     * @return double[] массив дробных значений поля объекта
      */
     public double[] getFractions() { return fractions; }
-
     /**
-     *
-     * @return
+     * Геттер для получения строковых значений полей
+     * @return String[] массив полей-строк, а также объектов представимые в виде строк
      */
     public String[] getLines() { return lines; }
   }
-  //TODO: check if some errors cast
   /**
-   *
-   * @return
+   * Не геттер, а процедура, формирующая экземпляр сборщика параметров класса коллекции.
+   * Посредством диалога с пользователем или файлом считывает нужные параметры класса
+   * @return {@link Junker} класс, хранящий беспорядочные данные об объекте типа коллекции
    */
-  protected abstract ParamsCollector getOrganization();
+  protected abstract Junker getOrganization();
   /**
-   *
-   * @return
+   * Не геттер, а процедура, формирующая экземпляр сборщика параметров класса, являющегося частью элемента коллекции.
+   * Посредством диалога с пользователем или файлом считывает нужные параметры класса
+   * @return {@link Junker} класс, хранящий беспорядочные данные об объекте типа, являющегося частью элемента коллекции
    */
-  protected abstract ParamsCollector getCoordinates();
+  protected abstract Junker getCoordinates();
   /**
-   *
-   * @return
+   * Не геттер, а процедура, формирующая экземпляр сборщика параметров класса, являющегося частью элемента коллекции.
+   * Посредством диалога с пользователем или файлом считывает нужные параметры класса
+   * @return {@link Junker} класс, хранящий беспорядочные данные об объекте типа, являющегося частью элемента коллекции
    */
-  protected abstract ParamsCollector getAddress();
+  protected abstract Junker getAddress();
   /**
-   *
-   * @return
+   * Не геттер, а процедура, формирующая экземпляр сборщика параметров класса, являющегося частью элемента коллекции.
+   * Посредством диалога с пользователем или файлом считывает нужные параметры класса
+   * @return {@link Junker} класс, хранящий беспорядочные данные об объекте типа, являющегося частью элемента коллекции
    */
-  protected abstract ParamsCollector getLocation();
+  protected abstract Junker getLocation();
 }

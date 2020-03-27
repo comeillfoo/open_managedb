@@ -25,7 +25,8 @@ class AddressBuilder implements Factory<Address> {
    * @return объект типа Address - адрес
    */
   @Override
-  public Address make(Prompter.ParamsCollector parts) {
+  public Address make(Prompter.Junker parts) {
+    if (parts == null) return null;
     String[] lines = parts.getLines();
     Location town = new LocationBuilder().make(parts.getInternals()[0]);
     return new Address(lines[0], town);

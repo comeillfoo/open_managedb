@@ -4,6 +4,9 @@ import entity.Organization;
 import interaction.customer.Receiver;
 import interaction.instructions.Decree;
 
+/**
+ * Класс команд удаления элементов по ключу
+ */
 public class RemoveKey extends Decree {
   private Integer key;
   public RemoveKey(Receiver<Integer, Organization> receiver) {
@@ -19,5 +22,4 @@ public class RemoveKey extends Decree {
   public static final String NAME = "remove_key";
   public static final String BRIEF = "Удаляет элемент по [key].";
   public static final String SYNTAX = NAME + " [key]";
-  public static final String DESCRIPTION = "Удаляет элемент коллекции с указанным [key].";
 }

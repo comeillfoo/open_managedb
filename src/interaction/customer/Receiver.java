@@ -2,6 +2,7 @@ package interaction.customer;
 
 import entity.Mappable;
 import interaction.instructions.extended.Indicator;
+import interaction.sender.Invoker;
 import interaction.sender.Prompter;
 
 import java.io.PrintStream;
@@ -17,7 +18,7 @@ public interface Receiver<K, V extends Mappable<K>> {
   /**
    * Простейший метод, добавляющий элемент в коллекцию,
    * Ключ вычисляется автоматически
-   * @param element
+   * @param element добавляемый элемент в коллекцию
    */
   void add(V element);
 
@@ -71,7 +72,7 @@ public interface Receiver<K, V extends Mappable<K>> {
    * @param committed объект, хранящий параметры о собранном элементе
    * @return собранный из параметров элемент коллекции
    */
-  Mappable<K> cook(Prompter.ParamsCollector committed);
+  Mappable<K> cook(Prompter.Junker committed);
 
   /**
    * Метод поиска ключа элемента по его id (идентификатору)
@@ -100,4 +101,10 @@ public interface Receiver<K, V extends Mappable<K>> {
    * @return ссылка на элемент коллекции
    */
   V lookFor(K key);
+
+  /**
+   * Метод подписки на оповещения о действия класса
+   * @param subscriber подписчик
+   */
+  void subscribe(Invoker subscriber);
 }

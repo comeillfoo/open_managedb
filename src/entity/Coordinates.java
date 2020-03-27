@@ -72,6 +72,6 @@ public class Coordinates {
   }
   @Override
   public int hashCode() {
-    return 0xdead;
+    return (int)(x + y) % 0xdead;
   }
 }

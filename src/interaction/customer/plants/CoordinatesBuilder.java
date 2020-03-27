@@ -23,7 +23,8 @@ class CoordinatesBuilder implements Factory<Coordinates> {
    * @return объект типа Coordinates - местоположение
    */
   @Override
-  public Coordinates make(Prompter.ParamsCollector parts) {
+  public Coordinates make(Prompter.Junker parts) {
+    if (parts == null) return new Coordinates();
     long[] integers = parts.getIntegers();
     double[] fractions = parts.getFractions();
     return new Coordinates((int) integers[0], new Float(fractions[0]));

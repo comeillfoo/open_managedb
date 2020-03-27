@@ -4,16 +4,20 @@ import interaction.customer.Receiver;
 
 import java.io.PrintStream;
 
+/**
+ * Класс команды выводящий элементы в стандартный поток вывода
+ */
 public class Show extends Recorder {
   public Show(Receiver receiver, PrintStream printer) {
     super(receiver, printer);
   }
-  @Override public void execute() { printer.println(sieve.survey((subject)->(true))); }
+  @Override public void execute() {
+    String list = sieve.survey((subject)->(true));
+    if (list.isEmpty()) printer.println("Коллекция пуста");
+    else printer.print(list);
+  }
   @Override public String toString() {return NAME + " : " + SYNTAX;}
   public static final String NAME = "show";
   public static final String BRIEF = "выводит все элементы в stdout";
   public static final String SYNTAX = NAME;
-  public static final String DESCRIPTION = "Выводит в стандартный поток вывода все элементы\n\t" +
-          "коллекции в их строковом представлении. Для\n\t" +
-          "всех элементов коллекции вызывается метод toString().";
 }

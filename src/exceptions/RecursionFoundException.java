@@ -7,4 +7,5 @@ package exceptions;
  * @see interaction.sender.FilePrompter
  */
 public class RecursionFoundException extends Exception {
+  public RecursionFoundException() { super("Обнаружена попытка создания рекурсии. Проверьте цепочку вызовов файлов"); }
 }
